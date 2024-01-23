@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+
+<section class="section dashboard">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Crear nueva Lista de Precios</h5>
+          <!-- Custom Styled Validation -->
+          <form class="row g-3" id="formProductPrice" method="POST">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-4">
+                <label class="form-label">Nombre</label>
+                {{form.name}}
+
+                <label class="form-label">Nombre de los Productos</label>
+                <div class="row">
+                  <div
+                    class="col-md-12 overflow-auto"
+                    style="height: 150px"
+                    id="warehouseChecket"
+                  >
+                    {%for products in products %}
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="{{products.id}}"
+                        data-product="{{products.name}}"
+                        name="products"
+                      />
+                      <label class="form-check-label">{{products.name}}</label>
+                    </div>
+
+                    {%endfor%}
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-md-8 overflow-y-auto ps-5 pe-5"
+                style="height: 300px"
+              >
+                <table class="table table-hover text-center">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Precio</th>
+                    </tr>
+                  </thead>
+                  <tbody id="inputsProducts"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <button class="btn btn-primary" type="submit">Guardar</button>
+            </div>
+          </form>
+          <!-- End Custom Styled Validation -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Lista de Precios</h5>
+
+        <!-- Table with hoverable rows -->
+        <table class="table table-hover text-center">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for productslist in productslist %}
+
+            <tr>
+              <th scope="row">{{productslist.id}}</th>
+              <td>{{productslist.name}}</td>
+              <td>
+                <a href="{% url 'editproductslist'  productslist.id %}"
+                  ><button
+                    type="button"
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal"
+                    id="btnModal"
+                  >
+                    <i class="bi bi-pencil-square"></i>Editar
+                  </button></a
+                >
+                <a href="#">
+                  <button type="button" class="btn btn-danger">
+                    <i class="bi bi-x-square"></i>Eliminar
+                  </button></a
+                >
+              </td>
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+        <!-- End Table with hoverable rows -->
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

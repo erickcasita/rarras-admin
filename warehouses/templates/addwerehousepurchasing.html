@@ -1,0 +1,173 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="section dashboard">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Compras de Almacén
+                </h5>
+                <!-- Custom Styled Validation -->
+                <form class="row g-3" id="formWerehousePurchasing" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Fecha de Remision</label>
+                            <input type="date" class="form-control" name="dateRemission">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Almacen</label>
+                            <input type="text" class="form-control" name="werehouse" value="{{request.user.profileuser.warehouse.title}}" disabled>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Lista de Precios</label>
+                            <select class="form-select" id="priceList" name="priceList">
+                                <option selected disabled value="">Seleccionar...</option>
+                                {% for listprice in listprice%}
+                                    <option value="{{listprice.id}}">{{listprice.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Cantidad</label>
+                            <input type="number" ondrop="return false;" onpaste="return false;"
+                                onkeypress="return event.charCode>=48 && event.charCode<=57"
+                                class="form-control" id="quantity">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label">Producto</label>
+                            <select class="form-select" id="product">
+                                <option selected disabled value="">Seleccionar...</option>
+                                {% for products in products%}
+                                    <option value="{{products.product.id}}">{{products.product.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Codigo del Producto</label>
+                            <input type="text" class="form-control" id="codeProduct">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Codigo SAP</label>
+                            <input type="text" class="form-control" id="codeSAP" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Ultimo Costo</label>
+                            <input type="text" class="form-control" id="lastCost" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <button class="btn btn-primary" type="button" id="remove">Borrar</button>
+                            <button class="btn btn-primary" type="button" id="add">Insertar</button>
+                        </div>
+                    </div>
+
+                    <div class="row" id="listProduct"></div>
+
+                    <div class="row">
+                        <div class="col-md-12 overflow-auto" style="height: 300px;">
+                            <!-- Table with hoverable rows -->
+                            <table class="table table-hover text-center" id="tableProduct">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Clave</th>
+                                        <th scope="col">SAP</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Precio Unitario</th>
+                                        <th scope="col">Importe</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <!-- End Table with hoverable rows -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Cantidad Total</label>
+                            <input type="text" class="form-control" id="totalQuantity" name="totalQuantity" readonly value="0">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Importe Total</label>
+                            <input type="text" class="form-control" id="totalAmount" name="totalAmount" readonly value="0">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Total</label>
+                            <input type="number" class="form-control" id="total" name="totaltotal" readonly value="0">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <label class="form-label">Observaciones</label>
+                            <textarea class="form-control" name="observation"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" type="submit">Guardar Compra</button>
+                    </div>
+
+                </form><!-- End Custom Styled Validation -->
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Listado de Compras</h5>
+
+                <!-- Table with hoverable rows -->
+                <table class="table table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Empleado</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Fecha Remision</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for purchasing in purchasing %}
+                        <tr>
+                           
+                            <th scope="row">{{purchasing.id}}</th>
+                            <td>{{request.user.first_name}} {{request.user.last_name}}</td>
+                            <td>{{purchasing.created |date:"d-m-Y"}}</td>
+                            <td>{{purchasing.fecrem |date:"d-m-Y"}}</td>
+                            <td>${{purchasing.totcom}}</td>
+                            <td>
+                                <a href="{% url 'showreportpurchasing' purchasing.pk %}">
+                                    <button type="button" class="btn btn-primary">
+                                      <i class="bi bi-file-earmark-pdf"></i> Reporte
+                                    </button></a
+                      
+                            </td>
+                        </tr>
+                        {% endfor %}
+                
+                    </tbody>
+                </table>
+                <!-- End Table with hoverable rows -->
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

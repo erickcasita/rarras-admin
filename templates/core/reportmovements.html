@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPORTE MOVIMIENTOS DE ALMACEN</title>
+</head>
+
+<body style="font-family: Arial, Helvetica, sans-serif;">
+    <table style="border-bottom: 1px solid; border-bottom-color: black;">
+        <tbody>
+            <tr>
+                <td>
+                     <img src="static/img/logorarras.png" alt="logo" width="150px"> 
+                </td>
+
+                <td style="width: 450px; text-align: center; ">
+                    <table>
+                        <tbody>
+                            <tr>
+                                
+                                <td
+                                    style="text-align: center; font-size: 20px;font-weight: bold; padding-bottom: 50px;">
+                                    SUPER TIENDAS RARRAS, S.A DE C.V</td>
+                            </tr>
+                            <tr style="text-align: left;font-size: 14px;font-weight: bold;">
+                                <td style="text-align: center; font-size: 14px;font-weight: bold;  ">REPORTE DE
+                                    MOVIMIENTOS DE ALMACEN</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                
+                                <td colspan="2" style="text-align: center;font-size: 10px;font-weight: bold;"> SUPER TIENDAS RARRAS
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"
+                                    style="text-align: center; font-size: 11px;font-weight: bold;border-bottom: 1px solid black;">
+                                    <br  />{{movements.pk}}
+                                </td>
+                            </tr>
+                            <br />
+                            <tr style="text-align: left;font-size: 10px;font-weight: bold; padding-top:3px">
+                                <td>FECHA:</td>
+                                <td>{{movements.created | date:"d/m/Y"}}</td>
+                            </tr>
+                            <tr style="text-align: left;font-size: 10px;font-weight: bold;">
+                                <td>HORA:</td>
+                                <td>{{movements.created | time:"H:i:s A"}}</td>
+                            </tr>
+                            <tr style="text-align: left;font-size: 10px;font-weight: bold;">
+                                <td>USUARIO:</td>
+                                   {%for u in user %}
+                                        <td>{{u.username}}</td>
+                                   {%endfor%}
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table style="padding-top:5px">
+        <tbody>
+            <tr style="font-weight: bold; font-size: 12px;">
+                <td style="width: 200px;">TIPO DE MOVIMIENTO</td>
+                <td style="width: 250px;">CONCEPTO</td>
+                <td style="width: 150px;">ALMACEN</td>
+                <td style="width: 150px;">FECHA</td>
+                <td style="width: 200px;">USUARIO</td>
+                <td style="width: 200px;">REMISION</td>
+
+            </tr>
+            <tr style="font-size: 10px;">
+                <td style="width: 200px;">{{movements.typemovement}}</td>
+                <td style="width: 250px;">{{movements.werehouseconcept}}</td>
+                <td style="width: 150px;">{{movements.werehouse}}</td>
+                <td style="width: 150px;">{{movements.created | date:"d/m/Y"}}</td>
+                {%for u in user %}
+                    <td style="width: 200px;">{{u.first_name}}  {{u.last_name}}</td>
+                {%endfor%}
+                <td style="width: 200px;">{{movements.pk}}</td>
+
+            </tr>
+            <tr style="font-weight: bold; font-size: 12px;">
+                <td colspan="5" style="padding-top: 20px;">OBSERVACIONES</td>
+            </tr>
+            <tr style="font-size: 10px;">
+                <td colspan="5">{{movements.observations}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+
+    <table>
+        <thead>
+            <tr style="font-weight: bold; font-size: 12px;">
+                <td style="width: 100PX;">CLAVE</td>
+                <td style="width: 100PX;">SAP</td>
+                <td style="width: 300PX;">PRODUCTO</td>
+                <td style="width: 100PX;text-align: right;  ">CANTIDAD</td>
+                <td style="width: 100PX; text-align: right; padding-right: 10px ;">TOTAL</td>
+            </tr>
+            <tr >
+                <td colspan="7" style="border-bottom: 1px solid; border-bottom-color: black;"></td>
+            </tr>
+        </thead>
+        <tbody >
+           
+                {%for i  in movementsdetails %}
+                <tr style="font-size: 10px; padding-top:5px;">
+                    <td style="width: 100PX;">{{i.product.id}}</td>
+                    <td style="width: 100PX;">{{i.product.cvesap}}</td>
+                    <td style="width: 300PX;">{{i.product}}</td>
+                    <td style="width: 100PX; text-align: right;">{{i.canmov}}</td>
+                    <td style="width: 100PX; text-align: center;">{{i.canmov}}</td>
+                </tr>
+                {%endfor%}
+         
+
+        </tbody>
+        <tbody>
+            <tr style="font-weight: bold; font-size: 10px; padding-top:5px">
+                <td colspan="3" style="text-align: right;">TOTALES</td>
+                <td style="width: 100PX;text-align: right;">{{totales.canmov__sum}}</td>
+                <td style="width: 100PX; text-align: center;">{{totales.canmov__sum}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br><br><br>
+
+    <table>
+        <tbody>
+            <tr style="font-size: 10px; font-weight: bold; text-align: center; padding-top: 5px">
+                <td style="width: 100px;"></td>
+                <td style="width: 300px; border-top: 1px solid; border-top-color: black;">Nombre y Firma<br>ENTREGO</td>
+                <td style="width: 150px;"></td>
+                <td style="width: 300px; border-top: 1px solid; border-top-color: black;">Nombre y Firma<br>RECIBIO</td>
+                <td style="width: 100px;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<section class="section dashboard">
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              Agregar un nuevo Producto
+            </h5>
+            <!-- Custom Styled Validation -->
+            <form class="row g-3 needs-validation" id="formProductCategory" method="POST" novalidate>
+                {% csrf_token %}
+                
+                <div class="col-md-10">
+                <div class="row">
+                <div class="col-md-6">
+                  <label for="nameValidation" class="form-label">Nombre Producto</label>
+                  {{form.name}} 
+                  <div class="invalid-feedback">
+                    Por favor, escriba el nombre del producto
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="branchValidations" class="form-label">Categoría</label>
+                  
+                  {{form.categories}}
+              
+                  <div class="invalid-feedback">
+                    Por favor, seleccione una categoría
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="branchValidations2" class="form-label">Marca</label>
+                    
+                    {{form.brands}}
+                
+                    <div class="invalid-feedback">
+                      Por favor, seleccione una marca
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="cvesap" class="form-label">SKU</label>
+                    {{form.cvesap}} 
+                    <div class="invalid-feedback">
+                      Por favor, escriba el SKU del producto
+                    </div>
+                  </div>
+            </div>
+        </div>    
+
+
+        <div class="col-md-2">
+            <label class="form-label">Seleccione Almacén</label>
+            <div class="row overflow-auto p-1" style="height: 100px;" id="warehouseChecket">
+
+            {%for werehouses in werehouses %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="{{werehouses.id}}" name="warehouse">
+                <label class="form-check-label">
+                 {{werehouses.title}}
+                </label>
+              </div>
+            {% endfor %}
+              
+        </div>
+      </div>
+
+          <div class="col-md-10">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+          </div>
+          <div class="col-md-2 form-check">
+            <input class="form-check-input" id="selectAll" type="checkbox">
+            <label class="form-check-label">
+              Seleccionar Todo
+            </label>
+          </div>
+        </form><!-- End Custom Styled Validation -->
+         </div>
+        </div>
+      
+   
+          <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Listado de Productos</h5>
+
+            <!-- Table with hoverable rows -->
+            <table class="table table-hover text-center">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Categoría</th>
+                  <th scope="col">Marca</th>
+                  <th scope="col">SKU</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for products in products %}
+                <tr>
+                  <td scope="row"> {{products.id}}</td>
+                  <td>{{products.name}}</td>
+                  <td  data-branch=""> {{products.categories}}</td>
+                  <td  data-branch=""> {{products.brands}}</td>
+                  <td  data-branch=""> {{products.cvesap}}</td>
+                  <td>
+                    <a href="{% url 'editproduct'  products.id %}"><button type="button" class="btn btn-success" data-bs-toggle="modal"
+                      data-bs-target="#editModal" id="btnModal"><i class="bi bi-pencil-square"></i>Editar</button></a>
+                  <a href="{% url 'deleteproduct'  products.id %}">
+                  <button type="button" class="btn btn-danger"><i class="bi bi-x-square"></i>Eliminar</button></a>
+                  </td>
+                </tr>
+                <tr>
+                
+                {% endfor%} 
+              </tbody>
+            </table>
+            <!-- End Table with hoverable rows -->
+
+          </div>
+        </div>
+
+        
+        </div>
+
+    </div>
+  </section>
+
+  {% endblock %}
+
+  

@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<section class="section dashboard">
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              Crear una nueva Categoria de Productos
+            </h5>
+            <!-- Custom Styled Validation -->
+            <form class="row g-3 needs-validation" id="formProductCategory" method="POST" novalidate>
+            {% csrf_token %}
+              <div class="col-md-4">
+                <label for="nameValidation" class="form-label">Nombre</label>
+                    {{form.name}} 
+                 <div class="invalid-feedback">
+                Por favor, escriba el nombre de la categoria
+              </div>
+              </div>
+              <div class="col-md-4">
+                <label for="sat" class="form-label">Clave del SAT</label>
+                    {{form.sat}} 
+             <div class="invalid-feedback">
+            Por favor, escriba los datos del sat
+          </div>
+              </div>
+              <div class="col-md-4">
+                <label for="umedida" class="form-label">Unidad de Medida</label>
+                {{form.umedida}} 
+         <div class="invalid-feedback">
+        Por favor, escriba la unidad de medida
+      </div>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-primary" type="submit">Editar</button>
+              </div>
+
+            </form><!-- End Custom Styled Validation -->
+          </div>
+        </div>
+        </div>
+
+    </div>
+  </section>
+
+  {% endblock %}

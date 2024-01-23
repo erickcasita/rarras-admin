@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<section class="section dashboard">
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              Crear una nueva Categoria de Productos
+            </h5>
+            <!-- Custom Styled Validation -->
+            <form class="row g-3 needs-validation" id="formProductCategory" method="POST" novalidate>
+            {% csrf_token %}
+              <div class="col-md-4">
+                <label for="nameValidation" class="form-label">Nombre</label>
+                    {{form.name}} 
+                 <div class="invalid-feedback">
+                Por favor, escriba el nombre de la categoria
+              </div>
+              </div>
+              <div class="col-md-4">
+                <label for="sat" class="form-label">Clave del SAT</label>
+                    {{form.sat}} 
+             <div class="invalid-feedback">
+            Por favor, escriba los datos del sat
+          </div>
+              </div>
+              <div class="col-md-4">
+                <label for="umedida" class="form-label">Unidad de Medida</label>
+                {{form.umedida}} 
+         <div class="invalid-feedback">
+        Por favor, escriba la unidad de medida
+      </div>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+              </div>
+
+            </form><!-- End Custom Styled Validation -->
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Registo Tipo de Movimientos</h5>
+
+          <!-- Table with hoverable rows -->
+          <table class="table table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Clave SAT</th>
+                <th scope="col">Unidad de Medida</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for categorie in categories %}
+                <tr>
+                  <td scope="row"> {{categorie.id}}</td>
+                  <td>{{categorie.name}}</td>
+                  <td  data-branch=""> {{categorie.sat}}</td>
+                  <td  data-branch=""> {{categorie.umedida}}</td>
+
+                  <td>
+                    <a href="{% url 'editcategories' categorie.id %}"><button type="button" class="btn btn-success" data-bs-toggle="modal"
+                      data-bs-target="#editModal" id="btnModal"><i class="bi bi-pencil-square"></i>Editar</button></a>
+
+                  <a href="{% url 'deletecategories' categorie.id %}">
+                  <button type="button" class="btn btn-danger"><i class="bi bi-x-square"></i>Eliminar</button></a>
+                  </td>
+                </tr>
+                <tr>
+                
+                {% endfor%}
+            </tbody>
+          </table>
+          <!-- End Table with hoverable rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {% endblock %}
