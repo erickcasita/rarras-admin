@@ -161,7 +161,8 @@ def editproduct (request, products_id):
         werehouses = WareHouses.objects.filter(visible=True)
         return render(request, 'editproducts.html', {
             'form':form,
-            'werehouses': werehouses
+            'werehouses': werehouses,
+            'product_id': products_id
         })
     else :
         try:
