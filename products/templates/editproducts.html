@@ -13,6 +13,8 @@
             <!-- Custom Styled Validation -->
             <form class="row g-3" id="formeditproducts" method="POST">
             {% csrf_token %}
+            <div class="col-md-10">
+              <div class="row">
             <div class="col-md-6">
                 <label for="nameValidation" class="form-label">Nombre Producto</label>
                 {{form.name}} 
@@ -29,8 +31,32 @@
                 <label for="cvesap" class="form-label">SKU</label>
                 {{form.cvesap}} 
               </div>
-              <div class="col-md-12">
+            </div>
+            </div>
+
+              <div class="col-md-2">
+                <label class="form-label">Seleccione Almacén</label>
+                <div class="row overflow-auto p-1" style="height: 100px;" id="warehouseChecket">
+    
+                {%for werehouses in werehouses %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{werehouses.id}}" name="warehouse">
+                    <label class="form-check-label">
+                     {{werehouses.title}}
+                    </label>
+                  </div>
+                {% endfor %}
+                  
+            </div>
+          </div>
+              <div class="col-md-10">
                 <button class="btn btn-primary" type="submit">Editar</button>
+              </div>
+              <div class="col-md-2 form-check">
+                <input class="form-check-input" id="selectAll" type="checkbox">
+                <label class="form-check-label">
+                  Seleccionar Todo
+                </label>
               </div>
 
             </form><!-- End Custom Styled Validation -->
