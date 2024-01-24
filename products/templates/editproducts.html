@@ -11,39 +11,23 @@
               Crear una nueva Categoria de Productos
             </h5>
             <!-- Custom Styled Validation -->
-            <form class="row g-3 needs-validation" id="formProductCategory" method="POST" novalidate>
+            <form class="row g-3" id="formeditproducts" method="POST">
             {% csrf_token %}
             <div class="col-md-6">
                 <label for="nameValidation" class="form-label">Nombre Producto</label>
                 {{form.name}} 
-                <div class="invalid-feedback">
-                  Por favor, escriba el nombre del producto
-                </div>
               </div>
               <div class="col-md-6">
                 <label for="branchValidations" class="form-label">Categoría</label>
-                
                 {{form.categories}}
-            
-                <div class="invalid-feedback">
-                  Por favor, seleccione una categoría
-                </div>
               </div>
               <div class="col-md-6">
                 <label for="branchValidations2" class="form-label">Marca</label>
-                
                 {{form.brands}}
-            
-                <div class="invalid-feedback">
-                  Por favor, seleccione una marca
-                </div>
               </div>
               <div class="col-md-6">
                 <label for="cvesap" class="form-label">SKU</label>
                 {{form.cvesap}} 
-                <div class="invalid-feedback">
-                  Por favor, escriba el SKU del producto
-                </div>
               </div>
               <div class="col-md-12">
                 <button class="btn btn-primary" type="submit">Editar</button>

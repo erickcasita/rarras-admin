@@ -13,35 +13,19 @@
                 Crear un nuevo Concepto de  Almacén
               </h5>
               <!-- Custom Styled Validation -->
-              <form class="row g-3 needs-validation"  method = "POST" novalidate>
+              <form class="row g-3" id="formeditwerehouseconcept"  method="POST">
                 {% csrf_token %}
                 <div class="col-md-6">
                   <label for="nameValidation" class="form-label">Concepto de Almacén</label>
-                  
                   {{form.title}}
-                   
-                  <div class="invalid-feedback">
-                    Por favor, escriba el nombre del alamcen
-                  </div>
                 </div>
                 <div class="col-md-6">
                   <label for="branchValidations" class="form-label">Tipo de Movimiento</label>
-                  
-                
                       {{form.typemovement}}
-            
-           
-              
-                  <div class="invalid-feedback">
-                    Por favor, seleccione una sucursal
-                  </div>
                 </div>
                 <div class="col-md-12">
                   <label for="descriptionValidation" class="form-label">Descripción</label>
                     {{form.description}}
-                  <div class="invalid-feedback">
-                    Por favor, Escriba una descripción
-                  </div>
                 </div>
                 <div class="col-md-12">
                   <button class="btn btn-primary">Editar</button>
