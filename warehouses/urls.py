@@ -17,6 +17,7 @@ urlpatterns = [
     path('addwerehouseconcept/delete/<int:werehouseconcept_id>',views.deletewerehouseconcept, name='deletewerehouseconcept'),
     path('addmovementwerehouse/',views.addmovementwerehouse, name='addmovementwerehouse'),
     path('addmovementwerehouse/showreportsmovements/<int:werehousemovement_id>',views.showreportmovements, name='showreportmovements'),
+    path('addtransferwerehouse/',views.addtransferwerehouse, name='addtransferwerehouse'),
     
     
 ]

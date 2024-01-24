@@ -35,10 +35,10 @@ let match = false;
 $("#codeProduct").keyup(function () {
 
     $.ajax({
-        url: "/addproductlist/getpriceproduct/"+ $("#codeProduct").val(),
+        url: "/addproductlist/getpriceproduct/" + $("#codeProduct").val(),
         method: 'POST',
-        data : {
-            'csrfmiddlewaretoken':csrftoken,
+        data: {
+            'csrfmiddlewaretoken': csrftoken,
             'productlist': $("#priceList").val()
         },
         success: function (res) {
@@ -53,12 +53,25 @@ $("#codeProduct").keyup(function () {
             $("#lastCost").val('');
             $("#product option:first").prop('selected', true).change();
         }
-        
+
     });
 });
 
 $("#add").on("click", function () {
     if (parseInt($("#quantity").val()) > 0 && match) {
+        //nuevo
+        if ($(`#${$("#codeProduct").val() + '-product'}`).length) {
+            Swal.fire({
+                title: 'Producto Existente',
+                text: 'Este producto ya fue agregado a la compra',
+                icon: 'warning',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#0d6efd'
+            });
+            return false;
+            match = false; //nuevo
+        }
+        //fin nuevo
         let quantity = parseInt($("#quantity").val());
         let amount = parseFloat($("#quantity").val() * $("#lastCost").val());
         let tr = `<tr id="${$("#codeProduct").val() + '-table'}">
@@ -76,6 +89,16 @@ $("#add").on("click", function () {
         $("#total").val(parseFloat($("#total").val()) + amount);
         add();
         clean();
+    } else {
+        //nuevo
+        Swal.fire({
+            title: 'No hay cantidad o producto',
+            text: 'No se ha establecido una cantidad o producto establecido para la compra',
+            icon: 'warning',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#0d6efd'
+        });
+        //fin nuevo
     }
 });
 
@@ -112,12 +135,23 @@ $("#remove").on("click", function () {
             }
 
             indexInput++;
-            
+
         });
 
         $(`#${$("#codeProduct").val() + '-product'}`).remove();
         $(`#${$("#codeProduct").val() + '-table'}`).remove();
         clean();
+    } else {
+        //nuevo
+        Swal.fire({
+            title: 'Sin existencia en compra',
+            text: 'El producto que intenta borrar no esta en la bolsa de compra',
+            icon: 'warning',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#0d6efd'
+        });
+        clean();
+        //fin nuevo
     }
 });
 

@@ -339,3 +339,13 @@ def showreportpurchasing(request, werehousepurchasings_id):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+@login_required
+
+def addtransferwerehouse(request):
+    if request.method ==  'GET':
+
+        return render(request, 'addtransferwerehouse.html', {})
+    else:
+        print (request.POST)
+        return HttpResponseRedirect('/addtransferwerehouse/')

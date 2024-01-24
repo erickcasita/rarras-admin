@@ -1,0 +1,202 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Transferencia de Almacen{% endblock %}
+{% block content %}
+<section class="section dashboard">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Movimientos de Almacen
+                    </h5>
+
+                    <!-- Custom Styled Validation -->
+                    <form class="row g-3" id="formTransferWarehouse" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <H4>Almacen de Envio</H4>
+                                <div class="row">
+                                    <input type="hidden" name="typeMovementSend" id="typeMovementSend">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Tipo de Movimiento</label>
+                                        <select class="form-select" id="werehouseTypeMovementSend"
+                                            name="werehouseTypeMovementSend">
+                                            <option selected disabled value="">Seleccionar ...</option>
+                                            <option value="1">Entrada</option>
+                                            <option value="2">Salida</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label">Concepto de Almacen</label>
+                                        <select class="form-select" id="werehouseConceptSend"
+                                            name="werehouseConceptSend">
+                                            <option selected disabled value="">Seleccionar ...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Almacen</label>
+                                        <select class="form-select" id="werehouseSend" name="werehouseSend">
+                                            <option selected disabled value="">Seleccionar ...</option>
+                                            <option value="1">Almacen 1</option>
+                                            <option value="2">Almacen 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4>Almacen de Recepcion</h4>
+                                <div class="row">
+                                    <input type="hidden" name="typeMovementReception" id="typeMovementReception">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Tipo de Movimiento</label>
+                                        <select class="form-select" id="werehouseTypeMovementReception"
+                                            name="werehouseTypeMovementReception">
+                                            <option selected disabled value="">Seleccionar ...</option>
+                                            <option value="1">Entrada</option>
+                                            <option value="2">Salida</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label">Concepto de Almacen</label>
+                                        <select class="form-select" id="werehouseConceptReception"
+                                            name="werehouseConceptReception">
+                                            <option selected disabled value="">Seleccionar ...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Almacen</label>
+                                        <select class="form-select" id="werehouseReception" name="werehouseReception">
+                                            <option selected disabled value="">Seleccionar ...</option>
+                                            <option value="1">Almacen 1</option>
+                                            <option value="2">Almacen 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-md-12 overflow-y-auto ps-5 pe-5" style="height: 300px;">
+                                <table class="table table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Clave</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabletransferWerehouse">
+                                        <tr id="1-product">
+                                            <th scope="row">1</th>
+                                            <td>producto 1</td>
+                                            <td>
+                                                <input type="number" class="form-control" id="1-price" name="1-price">
+                                            </td>
+                                        </tr>
+                                        <tr id="2-product">
+                                            <th scope="row">2</th>
+                                            <td>producto 2</td>
+                                            <td>
+                                                <input type="number" class="form-control" id="2-price" name="2-price">
+                                            </td>
+                                        </tr>
+                                        <tr id="3-product">
+                                            <th scope="row">3</th>
+                                            <td>producto 3</td>
+                                            <td>
+                                                <input type="number" class="form-control" id="3-price" name="3-price">
+                                            </td>
+                                        </tr>
+                                        <tr id="4-product">
+                                            <th scope="row">4</th>
+                                            <td>producto 4</td>
+                                            <td>
+                                                <input type="number" class="form-control" id="4-price" name="4-price">
+                                            </td>
+                                        </tr>
+                                        <tr id="5-product">
+                                            <th scope="row">5</th>
+                                            <td>producto 5</td>
+                                            <td>
+                                                <input type="number" class="form-control" id="5-price" name="5-price">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Totales</label>
+                            <input type="text" class="form-control" name="total" id="totaltransferWarehouse" readonly
+                                disabled>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-primary" type="submit">Guardar</button>
+                        </div>
+
+                    </form>
+                    <!-- End Custom Styled Validation -->
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registro de Almacenes</h5>
+
+                    <!-- Table with hoverable rows -->
+                    <table class="table table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Tipo de Movimiento</th>
+                                <th scope="col">Concepto</th>
+                                <th scope="col">Almacen</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Entrada</td>
+                                <td>No se, algun concepto</td>
+                                <td>JDC 1</td>
+                                <td>15/01/2024</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary"><i
+                                            class="bi bi-pencil-square m-1"></i>Editar</button>
+                                    <button type="button" class="btn btn-danger"><i
+                                            class="bi bi-x-square m-1"></i>Eliminar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Salida</td>
+                                <td>No se, algun concepto</td>
+                                <td>JDC 1</td>
+                                <td>15/01/2024</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary"><i
+                                            class="bi bi-pencil-square m-1"></i>Editar</button>
+                                    <button type="button" class="btn btn-danger"><i
+                                            class="bi bi-x-square m-1"></i>Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- End Table with hoverable rows -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
