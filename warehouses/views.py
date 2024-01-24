@@ -202,7 +202,7 @@ def deletewerehouseconcept(request, werehouseconcept_id):
 def addmovementwerehouse(request):
     if request.method ==  'GET':
         productswarehouse = WereHouseStock.objects.filter(werehouse_id = request.user.profileuser.warehouse_id)
-        movements = WereHouseMovement.objects.all()
+        movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id)
         return render(request, 'addmovementwerehouse.html', {
             
             'formtypemovement': AddWareHouseConcept,
@@ -344,8 +344,53 @@ def showreportpurchasing(request, werehousepurchasings_id):
 
 def addtransferwerehouse(request):
     if request.method ==  'GET':
-
-        return render(request, 'addtransferwerehouse.html', {})
+        typemovementent = TypeMovement.objects.filter(visible=True, addition = True)
+        tyypemovementsal = TypeMovement.objects.filter(visible=True, addition = False)
+        warehouses = WareHouses.objects.filter(visible = True).exclude(pk=request.user.profileuser.warehouse.id)
+        productswarehouse = WereHouseStock.objects.filter(werehouse_id = request.user.profileuser.warehouse_id)
+        print ( warehouses)
+        return render(request, 'addtransferwerehouse.html', 
+                      {'moventrada':typemovementent, 'movsalida':tyypemovementsal,
+                      'warehouses': warehouses, 'products': productswarehouse})
     else:
-        print (request.POST)
+        try:
+            #insertando en la cabecera de movimientos almacen de envio
+            WereHouseMovement.objects.create(typemovement_id = request.POST.get('werehouseTypeMovementSend') ,werehouseconcept_id = request.POST.get('werehouseConceptSend'), werehouse_id = request.user.profileuser.warehouse.id,usercreated_id = request.user.id, observations = "SIN OBSERVACION")
+            #insertando en la cabecera de movimientos almacen de recepcion
+            WereHouseMovement.objects.create(typemovement_id = request.POST.get('werehouseTypeMovementReception') ,werehouseconcept_id = request.POST.get('werehouseConceptReception'), werehouse_id = request.POST.get('werehouseReception'),usercreated_id = request.user.id, observations = "SIN OBSERVACION")
+            
+            #insertando en el detalle de movimientos almacen envio  y recepcion
+            idmovement = WereHouseMovement.objects.last().id
+            for key, value in request.POST.lists():
+                    
+                if key not in ('csrfmiddlewaretoken','typeMovementSend','werehouseTypeMovementSend','werehouseConceptSend', 
+                               'typeMovementReception','werehouseTypeMovementReception','werehouseConceptReception',
+                               'werehouseReception'):
+                    
+                    product = key.split('-')
+                    canpd = "".join(value)
+                    if(canpd>str(0)):
+                       
+                        #detalle almacen de envio
+                        WereHouseMovementDetails.objects.create(canmov = canpd, product_id = product[0], usercreated_id = request.user.id,  werehousemovement_id = idmovement-1)
+                        #detalle almacen de recepcion
+                        WereHouseMovementDetails.objects.create(canmov = canpd, product_id = product[0], usercreated_id = request.user.id,  werehousemovement_id = idmovement)
+                        
+                                                            
+                        #modificando el stock almacen de envio
+                       
+                        stock = WereHouseStock.objects.get(werehouse_id = request.user.profileuser.warehouse.id, product_id = product[0])
+                        stock.stock = stock.stock - int (canpd) 
+                        stock.save()
+                        
+                        #modificando el stock del amnacen de repcion
+                        stock = WereHouseStock.objects.get(werehouse_id = request.POST.get('werehouseReception'), product_id = product[0])
+                        stock.stock = stock.stock + int(canpd) 
+                        stock.save()
+                        
+            messages.success(request,"Transferencia de almacén generado exitosamente")
+            return HttpResponseRedirect('/addtransferwerehouse/')
+
+        except ValueError as ex :
+            messages.success(request,ex)
         return HttpResponseRedirect('/addtransferwerehouse/')
