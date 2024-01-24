@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% block title %}Compras de Almacen{% endblock %}
 {% block content %}
 
 <section class="section dashboard">
@@ -54,7 +55,8 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label class="form-label">Codigo del Producto</label>
-                            <input type="text" class="form-control" id="codeProduct">
+                            <input type="number" ondrop="return false;" onpaste="return false;"
+                            onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control" id="codeProduct">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Codigo SAP</label>
