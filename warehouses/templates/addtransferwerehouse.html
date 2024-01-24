@@ -39,11 +39,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label">Almacen</label>
-                                        <select class="form-select" id="werehouseSend" name="werehouseSend">
-                                            <option selected disabled value="">Seleccionar ...</option>
-                                            <option value="1">Almacen 1</option>
-                                            <option value="2">Almacen 2</option>
-                                        </select>
+                                        <input type="text" class="form-control" namewerehouseSend id="werehouseSend" disabled value="Almacen 1">
                                     </div>
                                 </div>
                             </div>
@@ -142,56 +138,6 @@
 
                     </form>
                     <!-- End Custom Styled Validation -->
-
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Registro de Almacenes</h5>
-
-                    <!-- Table with hoverable rows -->
-                    <table class="table table-hover text-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Tipo de Movimiento</th>
-                                <th scope="col">Concepto</th>
-                                <th scope="col">Almacen</th>
-                                <th scope="col">Fecha</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Entrada</td>
-                                <td>No se, algun concepto</td>
-                                <td>JDC 1</td>
-                                <td>15/01/2024</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary"><i
-                                            class="bi bi-pencil-square m-1"></i>Editar</button>
-                                    <button type="button" class="btn btn-danger"><i
-                                            class="bi bi-x-square m-1"></i>Eliminar</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Salida</td>
-                                <td>No se, algun concepto</td>
-                                <td>JDC 1</td>
-                                <td>15/01/2024</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary"><i
-                                            class="bi bi-pencil-square m-1"></i>Editar</button>
-                                    <button type="button" class="btn btn-danger"><i
-                                            class="bi bi-x-square m-1"></i>Eliminar</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- End Table with hoverable rows -->
 
                 </div>
             </div>
