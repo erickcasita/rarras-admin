@@ -94,27 +94,23 @@ $("#werehouseTypeMovementReception").change(function () {
 });
 
 $("#tabletransferWerehouse input[type=number]").keyup(function () {
-
     let val = $(this).val();
     let input = $(this);
     let total = 0
 
-    if (additionsend && additionreception) {
-        $("#tabletransferWerehouse input[type=number]").each(function () {
-
-            if (!$(this).val() == '' && !$(this).val() == 0) {
-                total += parseInt($(this).val());
-            }
-        });
-
-        $("#totaltransferWarehouse").val(total);
-    } else {
+    if(addition){
+        let id = $(this).attr("id").split("-")[0];
+        console.log(id)
         $.ajax({
-            url: "http://127.0.0.1:5500/data/3.json",
-            type: 'GET',
-            dataType: 'json',
+            url: "/addwerehouse/getstockwerehouse/"+ id,
+        method: 'POST',
+        data : {
+            'csrfmiddlewaretoken':csrftoken
+            
+        },
             success: function (res) {
-                let max = parseInt(res['max']);
+                console.log(res)
+                let max = parseInt(res['stock']);
                 if (val > max) {
                     Swal.fire({
                         title: 'Maximo Superado',
@@ -123,21 +119,20 @@ $("#tabletransferWerehouse input[type=number]").keyup(function () {
                         confirmButtonText: 'Ok',
                         confirmButtonColor: '#0d6efd'
                     });
+                   
                     input.val(max);
                 }
-
                 $("#tabletransferWerehouse input[type=number]").each(function () {
 
                     if (!$(this).val() == '' && !$(this).val() == 0) {
                         total += parseInt($(this).val());
                     }
                 });
-
+                $("#valuetypeMovement").val("resta");
                 $("#totaltransferWarehouse").val(total);
             }
         });
     }
-
 
 });
 
