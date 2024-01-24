@@ -9,25 +9,17 @@
         <div class="card-body">
           <h5 class="card-title">Crear un nuevo Almacén</h5>
           <!-- Custom Styled Validation -->
-          <form class="row g-3 needs-validation" method="POST" novalidate>
+          <form class="row g-3" id="formaddwerehouse" method="POST">
             {% csrf_token %}
             <div class="col-md-6">
               <label for="nameValidation" class="form-label"
                 >Nombre almacén</label
               >
               {{form.title}}
-              <div class="invalid-feedback">
-                Por favor, escriba el nombre del alamcen
-              </div>
             </div>
             <div class="col-md-6">
               <label for="branchValidations" class="form-label">Sucursal</label>
-
               {{form.store}}
-
-              <div class="invalid-feedback">
-                Por favor, seleccione una sucursal
-              </div>
             </div>
             <div class="col-md-12">
               <button class="btn btn-primary">Guardar</button>
