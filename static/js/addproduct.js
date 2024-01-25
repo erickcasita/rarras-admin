@@ -15,7 +15,6 @@ $("#formaddproducts").validate({
         },
         cvesap: {
             required: true,
-            minlength: 6,
             normalizer: function (value) {
                 return $.trim(value);
             }
@@ -33,8 +32,7 @@ $("#formaddproducts").validate({
             required: "Por favor, seleccione la marca a la que pertenece"
         },
         cvesap: {
-            required: "Por favor, ingrese el sku del producto",
-            minlength: "El sku del producto debe de tener al menos 6 caracteres"
+            required: "Por favor, ingrese el sku del producto"
         },
     },
     submitHandler: function (form) {
@@ -59,7 +57,6 @@ $("#formeditproducts").validate({
         },
         cvesap: {
             required: true,
-            minlength: 6,
             normalizer: function (value) {
                 return $.trim(value);
             }
@@ -77,8 +74,7 @@ $("#formeditproducts").validate({
             required: "Por favor, seleccione la marca a la que pertenece"
         },
         cvesap: {
-            required: "Por favor, ingrese el sku del producto",
-            minlength: "El sku del producto debe de tener al menos 6 caracteres"
+            required: "Por favor, ingrese el sku del producto"
         },
     },
     submitHandler: function (form) {
@@ -104,6 +100,23 @@ $("#selectAll").click(function () {
 
 $("#warehouseChecket :checkbox").change(function (e) {
     if (!$(this).is(":checked")) {
-        $("#selectAll").prop('checked', false)
+        let check = $(this);
+        $.ajax({
+            url: "/consultar/cantidad en almacen/" + $(this).val() + '/' + $('#idProductEdit').val(),
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': csrftoken
+            },
+            success: function (res) {
+                if (res['quantity'] > 0) {
+                    check.prop('checked', true);
+                } else {
+                    $("#selectAll").prop('checked', false)
+                }
+            },
+            error: function (res) {
+                $("#selectAll").prop('checked', false)
+            }
+        });
     }
 });

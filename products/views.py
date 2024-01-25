@@ -158,8 +158,11 @@ def editproduct (request, products_id):
         
         products =  get_object_or_404(Products,pk=products_id, visible=True)
         form = AddProducts(instance=products)
+        werehouses = WareHouses.objects.filter(visible=True)
         return render(request, 'editproducts.html', {
-            'form':form
+            'form':form,
+            'werehouses': werehouses,
+            'product_id': products_id
         })
     else :
         try:
