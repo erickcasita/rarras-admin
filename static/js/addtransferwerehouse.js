@@ -46,7 +46,7 @@ $("#formTransferWarehouse").validate({
 
 let additionsend = true;
 let additionreception = true;
-
+const csrftoken = Cookies.get('csrftoken');
 $("#werehouseTypeMovementSend").change(function () {
     $.ajax({
         url: "/addtypemovement/gettypemovement/" + $(this).val(),
@@ -98,7 +98,7 @@ $("#tabletransferWerehouse input[type=number]").keyup(function () {
     let input = $(this);
     let total = 0
 
-    if(addition){
+    if(!additionsend){
         let id = $(this).attr("id").split("-")[0];
         console.log(id)
         $.ajax({
