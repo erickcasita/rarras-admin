@@ -169,6 +169,23 @@ def editproduct (request, products_id):
             products =  get_object_or_404(Products,pk=products_id, visible=True)
             form = AddProducts(request.POST,instance=products)
             form.save()
+            
+            #obteniendo lista de almacenes del producto
+            existwerehouses = WereHouseStock.objects.filter(product_id = request.POST.get('product-id')).only('werehouse_id')
+            listwerehouses = request.POST.getlist('warehouse')
+            listexistwerehouses = []
+            #si un elemeno no esta en la lista de almacenes del form  (se deschekeo)
+            for existid in existwerehouses:
+                 idwerehouse = existid.werehouse.id
+                 if(str(idwerehouse) not in list(listwerehouses)):
+                    dwerehouse = WereHouseStock.objects.filter(product_id = request.POST.get('product-id'), werehouse_id = int(idwerehouse))
+                    dwerehouse.delete()
+                 listexistwerehouses.append(idwerehouse)
+            #si un elemento no esta en la lista de la base de datos, (se chekeo) 
+            for rwerehouse in listwerehouses:
+                if(int(rwerehouse) not in listexistwerehouses):
+                    WereHouseStock.objects.create(werehouse_id = int(rwerehouse), stock = 0 ,product_id = request.POST.get('product-id') )
+            
             messages.success(request,"Producto editado satisfactoriamente")
             return HttpResponseRedirect('/addproducts/')
         
@@ -280,7 +297,16 @@ def editproductslist(request, productlist_id):
         
 
 @login_required
-
+def getwerehousesproduct(request,product_id):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        obj = {}
+        listidwerehouse = []
+        werehouse = WereHouseStock.objects.filter(product_id = product_id)
+        for ob in werehouse:
+            listidwerehouse.append(ob.werehouse.id)
+        obj['idwerehouse'] = listidwerehouse   
+        return HttpResponse(json.dumps (obj), content_type='application/json')
+@login_required
 def getpriceproduct(request, product_id):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         obj = {}
@@ -291,3 +317,11 @@ def getpriceproduct(request, product_id):
             obj['predlp'] = ob.predlp
             obj['cvesap'] = ob.product.cvesap
         return HttpResponse(json.dumps (obj), content_type='application/json')
+@login_required
+def getstockproduct(request, product_id):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        obj = {}
+        stock = WereHouseStock.objects.filter(product_id = product_id, werehouse_id = request.POST.get('werehouse'))
+        for ob in stock:
+            obj['stock'] = ob.stock
+        return HttpResponse(json.dumps (obj), content_type='application/json') 

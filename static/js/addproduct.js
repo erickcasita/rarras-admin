@@ -98,25 +98,3 @@ $("#selectAll").click(function () {
     }
 });
 
-$("#warehouseChecket :checkbox").change(function (e) {
-    if (!$(this).is(":checked")) {
-        let check = $(this);
-        $.ajax({
-            url: "/consultar/cantidad en almacen/" + $(this).val() + '/' + $('#idProductEdit').val(),
-            type: 'POST',
-            data: {
-                'csrfmiddlewaretoken': csrftoken
-            },
-            success: function (res) {
-                if (res['quantity'] > 0) {
-                    check.prop('checked', true);
-                } else {
-                    $("#selectAll").prop('checked', false)
-                }
-            },
-            error: function (res) {
-                $("#selectAll").prop('checked', false)
-            }
-        });
-    }
-});
