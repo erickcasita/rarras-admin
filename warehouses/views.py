@@ -8,6 +8,7 @@ from .models import WareHouses, TypeMovement, WareHouseConcept,WereHouseStock,We
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from products.models import ProductList
+from helpers.helpers import stockproduct
 #reports
 import os
 from django.conf import settings
@@ -383,10 +384,15 @@ def addtransferwerehouse(request):
                         stock.stock = stock.stock - int (canpd) 
                         stock.save()
                         
-                        #modificando el stock del amnacen de repcion
-                        stock = WereHouseStock.objects.get(werehouse_id = request.POST.get('werehouseReception'), product_id = product[0])
-                        stock.stock = stock.stock + int(canpd) 
-                        stock.save()
+                        #modificando el stock del almacen de repcion
+
+                        if(stockproduct(product[0],request.POST.get('werehouseReception'))):
+                            
+                            stock = WereHouseStock.objects.get(werehouse_id = request.POST.get('werehouseReception'), product_id = product[0])
+                            stock.stock = stock.stock + int(canpd) 
+                            stock.save()
+                        else:
+                            WereHouseStock.objects.create(werehouse_id = request.POST.get('werehouseReception'), stock = int(canpd) ,product_id = product[0] )
                         
             messages.success(request,"Transferencia de almacén generado exitosamente")
             return HttpResponseRedirect('/addtransferwerehouse/')
