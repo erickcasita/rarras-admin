@@ -271,16 +271,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/addproduct.js' %}"></script>
-    <script src="{% static 'js/addproductslist.js' %}"></script>
-    <script src="{% static 'js/movementwerehouse.js' %}"></script>
-    <script src="{% static 'js/addwerehousepurchasing.js' %}"></script>
-    <script src="{% static 'js/addtransferwerehouse.js' %}"></script>
-    <script src="{% static 'js/addtypemovement.js' %}"></script>
-    <script src="{% static 'js/addwerehouseconcept.js' %}"></script>
-    <script src="{% static 'js/addwerehouse.js' %}"></script>
-    <script src="{% static 'js/addbrands.js' %}"></script>
-    <script src="{% static 'js/addcategories.js' %}"></script>
-
+    {% block scripts %}{% endblock %}
   </body>
 </html>

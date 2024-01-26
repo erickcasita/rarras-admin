@@ -12,8 +12,8 @@
             </h5>
             <!-- Custom Styled Validation -->
             <form class="row g-3" id="formeditproducts" method="POST">
-            {% csrf_token %}
-            <input type="hidden" id="#idProductEdit" value="{{product_id}}">
+              {% csrf_token %}
+            <input type="hidden" id = "idProductEdit" value="{{product_id}}" name="product-id">
             <div class="col-md-10">
               <div class="row">
             <div class="col-md-6">
@@ -41,7 +41,7 @@
     
                 {%for werehouses in werehouses %}
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{werehouses.id}}" name="warehouse">
+                    <input class="form-check-input" type="checkbox" id="check-{{werehouses.id}}" value="{{werehouses.id}}" name="warehouse">
                     <label class="form-check-label">
                      {{werehouses.title}}
                     </label>
@@ -69,3 +69,5 @@
   </section>
 
   {% endblock %}
+
+  {% block scripts %} <script src="{% static 'js/editproducts.js' %}"></script> {% endblock %} 
