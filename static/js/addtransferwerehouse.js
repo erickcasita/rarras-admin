@@ -40,7 +40,17 @@ $("#formTransferWarehouse").validate({
         }
     },
     submitHandler: function (form) {
-        form.submit();
+        if (validateQuantity()) {
+            form.submit();
+        } else {
+            Swal.fire({
+                title: 'Productos en Cero',
+                text: 'Para realizar un movimiento de almacen, se debe de tener al menos un producto con existencia',
+                icon: 'warning',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#0d6efd'
+            });
+        }
     }
 });
 
@@ -150,3 +160,12 @@ $(document).ready(function () {
         });
     });
 });
+
+function validateQuantity() {
+    $("#tabletransferWerehouse input[type=number]").each(function () {
+        if ($(this).val() > 0) {
+            return true;
+        }
+    });
+    return false;
+}

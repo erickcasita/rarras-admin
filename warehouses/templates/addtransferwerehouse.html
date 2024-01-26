@@ -96,13 +96,18 @@
                                             <th scope="row">{{product.product.id}}</th>
                                             <td>{{product.product.name}}</td>
                                             <td>
-                                                <input type="number" class="form-control" id="{{product.product.id}}-price" name="{{product.product.id}}-price" value="0">
+                                                <input type="number" ondrop="return false;" onpaste="return false;" onkeypress="return event.charCode>=48 && event.charCode<=57" class="form-control" id="{{product.product.id}}-price" name="{{product.product.id}}-price" value="0">
                                             </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label class="form-label">Descripción</label>
+                            <textarea name="description" class="form-control"></textarea>
                         </div>
 
                         <div class="col-md-3">
