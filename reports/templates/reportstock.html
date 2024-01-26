@@ -18,12 +18,18 @@
                             <label class="form-label">Categoria</label>
                             <select class="form-select" name="categories">
                                 <option selected disabled value="">Seleccionar...</option>
+                                {%for category in categories %}
+                                <option value="{{category.id}}">{{category.name}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Almacen</label>
                             <select class="form-select" name="werehouse">
                                 <option selected disabled value="">Seleccionar...</option>
+                                {%for werehouse in werehouses %}
+                                <option value="{{werehouse.id}}">{{werehouse.title}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-12">
