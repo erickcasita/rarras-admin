@@ -31,7 +31,7 @@ $("#formWerehousePurchasing").validate({
 });
 
 let match = false;
-
+const csrftoken = Cookies.get('csrftoken');
 $("#codeProduct").keyup(function () {
 
     $.ajax({
