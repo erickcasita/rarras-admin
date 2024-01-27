@@ -16,6 +16,8 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
+#date
+from datetime import datetime
 # Create your views here.
 
 @login_required
@@ -203,7 +205,7 @@ def deletewerehouseconcept(request, werehouseconcept_id):
 def addmovementwerehouse(request):
     if request.method ==  'GET':
         productswarehouse = WereHouseStock.objects.filter(werehouse_id = request.user.profileuser.warehouse_id)
-        movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id)
+        movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id).filter(created__date=datetime.now())
         return render(request, 'addmovementwerehouse.html', {
             
             'formtypemovement': AddWareHouseConcept,
@@ -275,7 +277,7 @@ def addwerehousepurchasing(request):
        
         listprice =  ProductList.objects.all()
         products = WereHouseStock.objects.filter(werehouse_id  = request.user.profileuser.warehouse.id)
-        purchasing = WereHousePurchasing.objects.all()
+        purchasing = WereHousePurchasing.objects.all().filter(created__date=datetime.now())
         return render(request, 'addwerehousepurchasing.html', {
             
             'listprice': listprice,
