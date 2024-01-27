@@ -12,8 +12,8 @@
                         Filtro Reporte de Existencias
                     </h5>
                     <!-- Custom Styled Validation -->
-                    <form class="row g-3" id="formgeneratereportstock">
-
+                    <form class="row g-3" id="formgeneratereportstock" method = "POST">
+                        {% csrf_token %}
                         <div class="col-md-6">
                             <label class="form-label">Categoria</label>
                             <select class="form-select" name="categories">
