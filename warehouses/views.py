@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from products.models import ProductList
 from helpers.helpers import stockproduct
+from datetime import datetime
 #reports
 import os
 from django.conf import settings
@@ -250,8 +251,11 @@ def addmovementwerehouse(request):
 
 def showreportmovements(request, werehousemovement_id):
     
+    datenow = datetime.now()
     context = {'user': User.objects.filter(pk=request.user.id), 'movementsdetails': WereHouseMovementDetails.objects.filter(werehousemovement_id = werehousemovement_id),
-               'movements':get_object_or_404(WereHouseMovement,pk=werehousemovement_id), 'totales': WereHouseMovementDetails.objects.filter(werehousemovement_id = werehousemovement_id).aggregate(Sum('canmov'))}
+               'movements':get_object_or_404(WereHouseMovement,pk=werehousemovement_id), 
+               'totales': WereHouseMovementDetails.objects.filter(werehousemovement_id = werehousemovement_id).aggregate(Sum('canmov')),
+               'datenow': datenow}
     
      # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
@@ -320,11 +324,12 @@ def addwerehousepurchasing(request):
 @login_required       
 
 def showreportpurchasing(request, werehousepurchasings_id):
-    
+    datenow = datetime.now()
     context = {'user': User.objects.get(pk=request.user.id),
                'purchase':get_object_or_404(WereHousePurchasing,pk=werehousepurchasings_id),
                'detailspurchase': WereHousePurchasingDetails.objects.filter(werehousepurchasing_id =werehousepurchasings_id ),
-               'totales': WereHousePurchasingDetails.objects.filter(werehousepurchasing_id = werehousepurchasings_id).aggregate(Sum('candco'),Sum('predco') )}
+               'totales': WereHousePurchasingDetails.objects.filter(werehousepurchasing_id = werehousepurchasings_id).aggregate(Sum('candco'),Sum('predco') ),
+               'datenow': datenow}
     
      # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')

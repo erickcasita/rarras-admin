@@ -19,7 +19,6 @@ from django.urls import path,include
 from warehouses import views
 from products import views as pd
 from profileuser import views as pusr
-from reports import views as rp
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', pusr.signin, name='root'),
@@ -41,6 +40,5 @@ urlpatterns = [
     path('addproductlist/getpriceproduct/<int:product_id>',pd.getpriceproduct, name='getpriceproduct'),
     path('addproducts/getwerehousesproduct/<int:product_id>',pd.getwerehousesproduct, name='getwerehousesproduct'),
     path('addproducts/getstockproduct/<int:product_id>',pd.getstockproduct, name='getstockproduct'),
-    path('reportstock/',rp.reportstock, name='reportstock'),
-    
+    path('', include('reports.urls')),
 ]
