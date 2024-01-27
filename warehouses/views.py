@@ -205,7 +205,7 @@ def deletewerehouseconcept(request, werehouseconcept_id):
 def addmovementwerehouse(request):
     if request.method ==  'GET':
         productswarehouse = WereHouseStock.objects.filter(werehouse_id = request.user.profileuser.warehouse_id)
-        movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id).filter(created__date=datetime.now())
+        movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id, created__date=datetime.now())
         return render(request, 'addmovementwerehouse.html', {
             
             'formtypemovement': AddWareHouseConcept,
