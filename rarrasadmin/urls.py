@@ -42,5 +42,6 @@ urlpatterns = [
     path('addproducts/getwerehousesproduct/<int:product_id>',pd.getwerehousesproduct, name='getwerehousesproduct'),
     path('addproducts/getstockproduct/<int:product_id>',pd.getstockproduct, name='getstockproduct'),
     path('reportstock/',rp.reportstock, name='reportstock'),
+    path('reportmovement/',rp.reportmovement, name='reportmovement'),
     
 ]

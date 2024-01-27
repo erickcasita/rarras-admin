@@ -16,3 +16,10 @@ def reportstock (request):
         })
     else:
         pass
+
+@login_required
+def reportmovement (request):
+    if request.method ==  'GET':
+        return render(request, 'reportmovement.html')
+    else:
+        pass

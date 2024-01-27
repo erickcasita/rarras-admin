@@ -229,12 +229,17 @@
           </a>
           <ul
             id="reports-nav"
-            class="nav-content collapse {% if request.path == '/reportstock/' %} show {% endif %}"
+            class="nav-content collapse {% if request.path == '/reportstock/' or request.path == '/reportmovement/' %} show {% endif %}"
             data-bs-parent="#sidebar-nav"
           >
             <li>
               <a href="{% url 'reportstock' %}" {% if request.path == '/reportstock/' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Existencias de Almacen</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'reportmovement' %}" {% if request.path == '/reportmovement/' %}class="active"{% endif %}>
+                <i class="bi bi-circle"></i><span>Movimientos</span>
               </a>
             </li>
           </ul>
