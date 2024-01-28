@@ -1,6 +1,6 @@
 $("#formreportmovements").validate({
     rules: {
-        movement: {
+        typemovement: {
             required: true,
         },
         werehouse: {
@@ -17,7 +17,7 @@ $("#formreportmovements").validate({
         }
     },
     messages: {
-        movement: {
+        typemovement: {
             required: "Por favor, seleccione el movimiento del reporte"
         },
         werehouse: {
@@ -34,7 +34,8 @@ $("#formreportmovements").validate({
         }
     },
     submitHandler: function (form) {
-        let today = new Date();
+        let now = new Date();
+        let today = new Date(`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`);
         let dateinitform = new Date($('#date_init').val());
         let datefinishform = new Date($('#date_finish').val());
         if (today < dateinitform || today < datefinishform) {
@@ -59,4 +60,28 @@ $("#formreportmovements").validate({
             }
         }
     }
+});
+
+const csrftoken = Cookies.get('csrftoken');
+
+$("#branchValidation").change(function () {
+    $.ajax({
+        url: "/addtypemovement/gettypemovement/" + $(this).val(),
+        method: 'POST',
+        data: {
+            'csrfmiddlewaretoken': csrftoken
+        },
+
+        success: function (res) {
+            $('#reportmovementconcept').empty();
+            let option = '<option selected disabled value="">Seleccionar ...</option>';
+            Object.entries(res).forEach(([key, value]) => {
+                if (key != 'typemovement') {
+                    option += `<option value="${key}">${value}</option>`;
+
+                }
+            })
+            $('#reportmovementconcept').append(option);
+        }
+    });
 });
