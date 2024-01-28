@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from products.models import Categories
-from warehouses.models import WareHouses,WereHouseStock
+from warehouses.models import WareHouses,WereHouseStock,WereHouseMovement
 from products.models import Categories
 from django.db.models import Sum
 from django.contrib import messages
 from django.contrib.auth.models import User
 from datetime import datetime
+from warehouses.forms import AddWareHouseConcept
 #reports
 import os
 from django.conf import settings
@@ -52,3 +53,14 @@ def reportstock (request):
         if pisa_status.err:
             return HttpResponse('We had some errors <pre>' + html + '</pre>')
         return response
+    
+@login_required
+def reportmovement (request):
+    if request.method ==  'GET':
+        werehouses = WareHouses.objects.filter(visible=True)
+        return render(request, 'reportmovement.html', {
+            'werehouses': werehouses,
+            'formtypemovement': AddWareHouseConcept,
+        })
+    else:
+        pass
