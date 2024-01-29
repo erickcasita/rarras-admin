@@ -12,8 +12,8 @@
                         Filtro Reporte de Movimientos
                     </h5>
                     <!-- Custom Styled Validation -->
-                    <form class="row g-3" id="formreportmovements">
-
+                    <form class="row g-3" id="formreportmovements" method = "POST">
+                        {% csrf_token %}
                         <div class="col-md-6">
                             <label class="form-label">Almacen</label>
                             <select class="form-select" name="werehouse">
