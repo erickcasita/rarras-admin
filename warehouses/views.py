@@ -108,8 +108,8 @@ def gettypemovement(request,typemovement_id):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         res = []
         obj = {}
-        warehouseconcept = WareHouseConcept.objects.filter(typemovement_id = typemovement_id)
-        typemovement = TypeMovement.objects.filter(pk=typemovement_id)
+        warehouseconcept = WareHouseConcept.objects.filter(typemovement_id = typemovement_id, visible= True)
+        typemovement = TypeMovement.objects.filter(pk=typemovement_id, visible=True)
         for c in warehouseconcept:
             obj[c.id] = c.title
             
