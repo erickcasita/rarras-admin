@@ -110,7 +110,6 @@ $("#tabletransferWerehouse input[type=number]").keyup(function () {
 
     if(!additionsend){
         let id = $(this).attr("id").split("-")[0];
-        console.log(id)
         $.ajax({
             url: "/addwerehouse/getstockwerehouse/"+ id,
         method: 'POST',
@@ -119,7 +118,6 @@ $("#tabletransferWerehouse input[type=number]").keyup(function () {
             
         },
             success: function (res) {
-                console.log(res)
                 let max = parseInt(res['stock']);
                 if (val > max) {
                     Swal.fire({
@@ -162,10 +160,11 @@ $(document).ready(function () {
 });
 
 function validateQuantity() {
+    let valit = false;
     $("#tabletransferWerehouse input[type=number]").each(function () {
         if ($(this).val() > 0) {
-            return true;
+            valit = true;
         }
     });
-    return false;
+    return valit;
 }
