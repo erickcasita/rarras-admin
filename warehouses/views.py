@@ -363,9 +363,9 @@ def addtransferwerehouse(request):
     else:
         try:
             #insertando en la cabecera de movimientos almacen de envio
-            WereHouseMovement.objects.create(typemovement_id = request.POST.get('werehouseTypeMovementSend') ,werehouseconcept_id = request.POST.get('werehouseConceptSend'), werehouse_id = request.user.profileuser.warehouse.id,usercreated_id = request.user.id, observations = "SIN OBSERVACION")
+            WereHouseMovement.objects.create(typemovement_id = request.POST.get('werehouseTypeMovementSend') ,werehouseconcept_id = request.POST.get('werehouseConceptSend'), werehouse_id = request.user.profileuser.warehouse.id,usercreated_id = request.user.id, observations = request.POST.get('description'))
             #insertando en la cabecera de movimientos almacen de recepcion
-            WereHouseMovement.objects.create(typemovement_id = request.POST.get('werehouseTypeMovementReception') ,werehouseconcept_id = request.POST.get('werehouseConceptReception'), werehouse_id = request.POST.get('werehouseReception'),usercreated_id = request.user.id, observations = "SIN OBSERVACION")
+            WereHouseMovement.objects.create(typemovement_id = request.POST.get('werehouseTypeMovementReception') ,werehouseconcept_id = request.POST.get('werehouseConceptReception'), werehouse_id = request.POST.get('werehouseReception'),usercreated_id = request.user.id, observations = request.POST.get('description'))
             
             #insertando en el detalle de movimientos almacen envio  y recepcion
             idmovement = WereHouseMovement.objects.last().id

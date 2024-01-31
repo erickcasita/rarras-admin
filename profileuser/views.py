@@ -12,7 +12,7 @@ def signin (request):
             'form': AuthenticationForm
          })
     if  request.method ==  'GET' and  request.user.is_authenticated:
-         return HttpResponseRedirect('/addwerehouse')
+         return HttpResponseRedirect('/dashboard')
      
     if  request.method ==  'POST':
         user = authenticate(request, username= request.POST['username'], password=request.POST['password'])
@@ -21,7 +21,7 @@ def signin (request):
             return HttpResponseRedirect('')
         else:
             login(request, user)
-            return HttpResponseRedirect('/addwerehouse/')
+            return HttpResponseRedirect('/dashboard/')
 def signout(request):
     logout(request)
     return HttpResponseRedirect('/signin/')
