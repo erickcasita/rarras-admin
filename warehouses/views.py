@@ -373,7 +373,7 @@ def addtransferwerehouse(request):
                     
                 if key not in ('csrfmiddlewaretoken','typeMovementSend','werehouseTypeMovementSend','werehouseConceptSend', 
                                'typeMovementReception','werehouseTypeMovementReception','werehouseConceptReception',
-                               'werehouseReception'):
+                               'werehouseReception','description'):
                     
                     product = key.split('-')
                     canpd = "".join(value)

@@ -66,8 +66,13 @@ def reportmovement (request):
         concepid = request.POST.get('concept')
         typemovement = request.POST.get('typemovement')
         idwerehouse = request.POST.get('werehouse')
-        initdate = request.POST.get('date_init')
-        finaldate = request.POST.get('date_finish')
+        
+        initdate = datetime.utcnow()
+        finaldate = datetime.utcnow()
+        initdate = datetime.strptime(request.POST.get('date_init') ,"%Y-%m-%d") 
+        finaldate = datetime.strptime(request.POST.get('date_finish') ,"%Y-%m-%d") 
+        finaldate = finaldate.replace(minute=59, hour=23, second=59)
+     
         user = request.user.username
         datenow = datetime.now()
         
