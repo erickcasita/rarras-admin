@@ -1,0 +1,108 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="section dashboard">
+    <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+            <div class="row">
+
+                <!-- shop Card -->
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card revenue-card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Tiendas <span>| Total</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="ri ri-store-3-fill"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{stores}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- End shop Card -->
+
+                <!-- product Card -->
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card sales-card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Productos <span>| Total</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cart3"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{products}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- End product Card -->
+
+                <!-- Almacenes Card -->
+                <div class="col-xxl-4 col-md-4">
+
+                    <div class="card info-card customers-card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Almacenes <span>| Total</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-box-seam"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{werehouses}}</h6>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div><!-- End Almacenes Card -->
+
+                <!-- Reports Almacenes -->
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Almacen <span>/ Stock</span></h5>
+                            <!-- Table with hoverable rows -->
+                            <table class="table table-hover text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID Almacen</th>
+                                        <th scope="col">Almacen</th>
+                                        <th scope="col">Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ws in werehouseStock %}
+                                        <tr>
+                                            <th scope="row">{{ws.werehouse}}</th>
+                                            <td>{{ws.title}}</td>
+                                            <td>{{ws.stock}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <!-- End Table with hoverable rows -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- End Left side columns -->
+    </div>
+</section>
+{% endblock %}
