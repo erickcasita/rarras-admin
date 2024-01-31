@@ -67,34 +67,54 @@
         <td style="text-align: center;border-right: 1px solid; border-right-color: black">PRODUCTO</td>
         <td style="text-align: center;">EXISTENCIAS</td>
       </tr>
-       
+       {% for movement in movement %}
         <tr colspan = "2"style="font-size: 11px; padding-top: 5px;">
           <td style="text-align: left; font-size: 11px;font-weight: bold;">ALMACEN</td>
-          <td style="font-size: 10px">{{werehouses.title}}</td>
+          <td style="font-size: 10px">{{movement.werehouse.title}}</td>
           <td style="text-align: left; font-size: 11px;font-weight: bold;">MOVIMIENTO</td>
-          <td style="font-size: 10px;  margin-right:20px;">{{tmovement.name}}</td>
+          <td style="font-size: 10px;  margin-right:20px;">{{movement.typemovement.name}}</td>
         </tr>
         <tr colspan = "2" style="font-size: 11px;">
           <td  style="text-align: left; font-size: 11px;font-weight: bold;">CONCEPTO</td>
-          <td style= "font-size: 10px">{{concept.title}}</td>
+          <td style= "font-size: 10px">{{movement.werehouseconcept.title}}</td>
         </tr>
  
     </thead>
     <tbody>
-      {% for movement in movement %}
-      <tr style="font-size: 10PX; padding-top: 5px">
-        <td>{{movement.product.id}}</td>
-        <td>{{movement.product.cvesap}}</td>
-        <td style="otext-align: center;border-right: 1px solid; border-right-color: black">{{movement.product.name}}</td>
-        <td style="text-align: center;">{{movement.canmov}}</td>
-      </tr>
+      {% for detailsmovements in detailsmovements %}
+        {% if movement.id == detailsmovements.werehousemovement.id%}
+            <tr style="font-size: 10PX; padding-top: 5px">
+                <td>{{detailsmovements.product.id}}</td>
+                <td>{{detailsmovements.product.cvesap}}</td>
+                <td style="otext-align: center;border-right: 1px solid; border-right-color: black">{{detailsmovements.product.name}}</td>
+                <td style="text-align: center;">{{detailsmovements.canmov}}</td>
+            </tr>
+        {%endif%}
       {% endfor %}
+    
+    {% for totalxmovement in totalxmovement %}
+    {%if movement.id == totalxmovement.werehousemovement_id %}
+      <tfoot>
+          <tr style="font-size: 10px; padding-top:5px;">
+            <td colspan="3" style="text-align: right; font-size: 10px;font-weight: bold;">TOTALES POR CONCEPTO</td>
+            <td style="text-align: center; font-size: 10px; font-weight: bold;">{{totalxmovement.total}}</td>
+          </tr>
+      </tfoot>
+      <tr style="text-align: left;font-size: 10px;font-weight: bold; border-top: 1px solid  #000;">
+        <td></td>
+      </tr>
+
+    </tbody>
+    {%endif%}
+    {%endfor%}
+    {%endfor%}
     <tfoot>
       <tr style="font-size: 10px; padding-top:5px;">
-        <td colspan="3" style="text-align: right; font-size: 10px;font-weight: bold;">TOTALES POR CATEGORIA</td>
-        <td style="text-align: center; font-size: 10px">{{totales.canmov__sum}}</td>
+        <td colspan="3" style="text-align: right; font-size: 10px;font-weight: bold;">GRAN TOTAL</td>
+        <td style="text-align: center; font-size: 10px; font-weight: bold;">{{grantotal.canmov__sum}}</td>
       </tr>
-    </tfoot>
+  </tfoot>
+    
   </table>
 </body>
 
