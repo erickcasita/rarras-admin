@@ -19,6 +19,7 @@ from django.urls import path,include
 from warehouses import views
 from products import views as pd
 from profileuser import views as pusr
+from home import views as hv
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', pusr.signin, name='root'),
@@ -41,4 +42,5 @@ urlpatterns = [
     path('addproducts/getwerehousesproduct/<int:product_id>',pd.getwerehousesproduct, name='getwerehousesproduct'),
     path('addproducts/getstockproduct/<int:product_id>',pd.getstockproduct, name='getstockproduct'),
     path('', include('reports.urls')),
+    path('', include('home.urls')),
 ]
