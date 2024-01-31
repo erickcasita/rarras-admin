@@ -6,9 +6,6 @@ $("#formreportmovements").validate({
         werehouse: {
             required: true,
         },
-        concept: {
-            required: true,
-        },
         date_init: {
             required: true,
         },
@@ -22,9 +19,6 @@ $("#formreportmovements").validate({
         },
         werehouse: {
             required: "Por favor, seleccione el almacen del reporte"
-        },
-        concept: {
-            required: "Por favor, seleccione el concepto del reporte"
         },
         date_init: {
             required: "Por favor, seleccione la fecha inicial del reporte"
