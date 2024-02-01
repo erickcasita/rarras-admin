@@ -120,7 +120,7 @@ def deletebrands(request, brands_id):
 
 def addProducts (request):
     if request.method ==  'GET':
-        products = Products.objects.filter(visible=True)
+        products = Products.objects.filter(visible=True).order_by('pk')
         werehouses = WareHouses.objects.filter(visible=True)
         return render(request, 'addproducts.html', {
             'form': AddProducts,

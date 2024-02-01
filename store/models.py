@@ -5,7 +5,7 @@ from django.db import models
 class Store (models.Model):
     name = models.CharField(max_length=50)
     street = models.CharField(max_length=200)
-    ext = models.CharField(max_length=3,blank=True)
+    ext = models.CharField(max_length=10,blank=True)
     development = models.CharField(max_length=50)
     region = models.CharField(max_length=50 )
     eststore = models.BooleanField(default=True)
