@@ -29,18 +29,21 @@ class AddTypeMovement (forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddTypeMovement, self).__init__(*args, **kwargs)
         # desde aquí, puedes definir luego de iniciar el formulario, si los campos son obligatorios
-        self.fields['name'].required = True, # así no entrara al save(), si el campo no está lleno     
-
+        self.fields['name'].required = True,# así no entrara al save(), si el campo no está lleno     
     def clean_name(self):
         return self.cleaned_data["name"].upper()
 
     class Meta:
         model = TypeMovement
-        fields = ['name']
+        fields = ['name','addition']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'id': 'nameValidation'
+            }),
+            'addition': forms.CheckboxInput(attrs={
+                'class': 'form-check-input',
+                'id': 'checkaddition'
             }),
         }
     
