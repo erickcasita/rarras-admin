@@ -27,7 +27,7 @@
                 
               </tr>
               <tr>
-                <td style="text-align: center; font-size: 10px;font-weight: bold;">Periodo {{initdate}} al {{finaldate}}</td>
+                <td style="text-align: center; font-size: 10px;font-weight: bold;">Periodo {{initdate | date:"d/m/Y"}} al {{finaldate | date:"d/m/Y"}}</td>
               </tr>
             </tbody>
           </table>
@@ -77,8 +77,10 @@
         <tr colspan = "2" style="font-size: 11px;">
           <td  style="text-align: left; font-size: 11px;font-weight: bold;">CONCEPTO</td>
           <td style= "font-size: 10px">{{movement.werehouseconcept.title}}</td>
+          <td  style="text-align: left; font-size: 11px;font-weight: bold;">FECHA </td>
+          <td style= "font-size: 10px">{{movement.created  | date:"d/m/Y" }}</td>
         </tr>
- 
+
     </thead>
     <tbody>
       {% for detailsmovements in detailsmovements %}
