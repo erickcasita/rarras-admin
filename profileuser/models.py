@@ -13,7 +13,7 @@ class TypeUser (models.Model):
 class ProfileUser(models.Model):
     user = models.OneToOneField(User, on_delete= models.RESTRICT)
     typeuser = models.ForeignKey(TypeUser, on_delete= models.RESTRICT)
-    warehouse = models.ManyToManyField(WareHouses)
+    warehouse = models.ForeignKey(WareHouses, on_delete= models.RESTRICT)
     created  = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
