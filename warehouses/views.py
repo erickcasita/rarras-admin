@@ -57,7 +57,7 @@ def editwarehouse (request, warehouse_id):
             return HttpResponseRedirect('/addwerehouse/')
         
         except ValueError:
-            messages.success(request,"Error al actualizar el campo ")
+            messages.error(request,"Error al actualizar el campo ")
             return HttpResponseRedirect('/addwerehouse/')
 @login_required     
 def deletewarehouse(request, warehouse_id):
@@ -70,7 +70,7 @@ def deletewarehouse(request, warehouse_id):
         return HttpResponseRedirect('/addwerehouse/')
         
     except ValueError:
-        messages.success(request,"Error al actualizar el campo ")
+        messages.error(request,"Error al actualizar el campo ")
         return HttpResponseRedirect('/addwerehouse/')
 
 @login_required
@@ -106,7 +106,6 @@ def getstockwerehouse(request, product_id):
 @login_required
 def gettypemovement(request,typemovement_id):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        res = []
         obj = {}
         warehouseconcept = WareHouseConcept.objects.filter(typemovement_id = typemovement_id, visible= True)
         typemovement = TypeMovement.objects.filter(pk=typemovement_id, visible=True)
@@ -136,7 +135,7 @@ def edittypemovement(request, typemovement_id):
             return HttpResponseRedirect('/addtypemovement/')
         
         except ValueError:
-            messages.success(request,"Error al actualizar el campo ")
+            messages.error(request,"Error al actualizar el campo ")
             return HttpResponseRedirect('/addtypemovement/') 
 @login_required      
 def deletetypemovement(request, typemovement_id):
@@ -149,7 +148,7 @@ def deletetypemovement(request, typemovement_id):
         return HttpResponseRedirect('/addtypemovement/')
         
     except ValueError:
-        messages.success(request,"Error al actualizar el campo ")
+        messages.error(request,"Error al actualizar el campo ")
         return HttpResponseRedirect('/addtypemovement/')
 @login_required
 def addwerehouseconcept(request):
@@ -187,7 +186,7 @@ def editwerehouseconcept(request, werehouseconcept_id):
             return HttpResponseRedirect('/addwerehouseconcept/')
         
         except ValueError:
-            messages.success(request,"Error al actualizar el campo ")
+            messages.error(request,"Error al actualizar el campo ")
             return HttpResponseRedirect('/addwerehouseconcept/')
 @login_required
 def deletewerehouseconcept(request, werehouseconcept_id):
@@ -199,7 +198,7 @@ def deletewerehouseconcept(request, werehouseconcept_id):
         return HttpResponseRedirect('/addwerehouseconcept/')
         
     except ValueError:
-        messages.success(request,"Error al actualizar el campo ")
+        messages.error(request,"Error al actualizar el campo ")
         return HttpResponseRedirect('/addwerehouseconcept/') 
     
 @login_required 
@@ -246,7 +245,7 @@ def addmovementwerehouse(request):
             messages.success(request,"Movimiento de almacén generado exitosamente")
             return HttpResponseRedirect('/addmovementwerehouse/')
         except ValueError as ex :
-            messages.success(request,ex)
+            messages.error(request,ex)
             return HttpResponseRedirect('/addmovementwerehouse/')
         
 @login_required       
@@ -289,40 +288,39 @@ def addwerehousepurchasing(request):
             'purchasing': purchasing
          })
     else:
+        try:
+            #insertando en la cabecera de compras
+            WereHousePurchasing.objects.create(fecrem = request.POST.get('dateRemission'), totcom = request.POST.get('totaltotal'), observations = request.POST.get('observation'), usercreated_id = request.user.id)        
+            
+            #insertando en la cabecera de almacen
+            
+            WereHouseMovement.objects.create(typemovement_id = 2 ,werehouseconcept_id = 2, werehouse_id = request.user.profileuser.warehouse.id,usercreated_id = request.user.id, observations = request.POST.get('observation'))
+            #insertando en el detalle cabecera de compras
         
-        print (request.POST)
-        #insertando en la cabecera de compras
-        WereHousePurchasing.objects.create(fecrem = request.POST.get('dateRemission'), totcom = request.POST.get('totaltotal'), observations = request.POST.get('observation'), usercreated_id = request.user.id)        
-        
-         #insertando en la cabecera de almacen
-        
-        WereHouseMovement.objects.create(typemovement_id = 1 ,werehouseconcept_id = 2, werehouse_id = request.user.profileuser.warehouse.id,usercreated_id = request.user.id, observations = request.POST.get('observation'))
-        #insertando en el detalle cabecera de compras
-    
-        quantity  = request.POST.getlist("quantity")
-        totcom = request.POST.getlist("total")
-        predlp =  request.POST.getlist("predlp")
-        productscom = request.POST.getlist("product")
-        # id de compra insertada
-        idcomp = WereHousePurchasing.objects.last().id
-        
-        #id del movimiento insertado
-        idmov  = WereHouseMovement.objects.last().id
-        for i in range(0,len(quantity)):
-            #insertando en el detalle de la compra
-            WereHousePurchasingDetails.objects.create(candco = quantity[i], totdco = totcom[i], predco = predlp[i], product_id = productscom[i],werehousepurchasing_id = idcomp )
-            #insertando en el detalle del movimiento
-            WereHouseMovementDetails.objects.create(canmov = quantity[i], product_id = productscom[i], usercreated_id = request.user.id,  werehousemovement_id = idmov)
-            # afectando  entrada (suma) al almacen
-            stock = WereHouseStock.objects.get(werehouse_id = request.user.profileuser.warehouse.id, product_id =productscom[i])
-            stock.stock = stock.stock + int(quantity[i]) 
-            stock.save()       
-        
-        
-        messages.success(request,"Compra Generada Exitosamente")
-        return HttpResponseRedirect('/addwerehousepurchasing/')
-    
-
+            quantity  = request.POST.getlist("quantity")
+            totcom = request.POST.getlist("total")
+            predlp =  request.POST.getlist("predlp")
+            productscom = request.POST.getlist("product")
+            # id de compra insertada
+            idcomp = WereHousePurchasing.objects.last().id
+            
+            #id del movimiento insertado
+            idmov  = WereHouseMovement.objects.last().id
+            
+            for i in range(0,len(quantity)):
+                #insertando en el detalle de la compra
+                WereHousePurchasingDetails.objects.create(candco = quantity[i], totdco = totcom[i], predco = predlp[i], product_id = productscom[i],werehousepurchasing_id = idcomp )
+                #insertando en el detalle del movimiento
+                WereHouseMovementDetails.objects.create(canmov = quantity[i], product_id = productscom[i], usercreated_id = request.user.id,  werehousemovement_id = idmov)
+                # afectando  entrada (suma) al almacen
+                stock = WereHouseStock.objects.get(werehouse_id = request.user.profileuser.warehouse.id, product_id =productscom[i])
+                stock.stock = stock.stock + int(quantity[i]) 
+                stock.save()
+            messages.success(request,"Compra Generada Exitosamente")
+            return HttpResponseRedirect('/addwerehousepurchasing/')       
+        except ValueError as ex :
+            messages.error(request,ex)
+            return HttpResponseRedirect('/addwerehousepurchasing/')
 @login_required       
 
 def showreportpurchasing(request, werehousepurchasings_id):
@@ -405,5 +403,5 @@ def addtransferwerehouse(request):
             return HttpResponseRedirect('/addtransferwerehouse/')
 
         except ValueError as ex :
-            messages.success(request,ex)
+            messages.error(request,ex)
         return HttpResponseRedirect('/addtransferwerehouse/')

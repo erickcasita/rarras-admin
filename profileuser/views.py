@@ -17,8 +17,8 @@ def signin (request):
     if  request.method ==  'POST':
         user = authenticate(request, username= request.POST['username'], password=request.POST['password'])
         if user is None:
-            messages.success(request,"Usuario y / o Passwords incorrectos")
-            return HttpResponseRedirect('')
+            messages.error(request,"Usuario y / o Passwords incorrectos")
+            return HttpResponseRedirect('/signin/')
         else:
             login(request, user)
             return HttpResponseRedirect('/dashboard/')
