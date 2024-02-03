@@ -5,7 +5,6 @@ from products.models import Categories
 from warehouses.models import WareHouses,WereHouseStock, WereHouseMovementDetails, WareHouseConcept,TypeMovement,WereHouseMovement
 from products.models import Categories
 from django.db.models import Sum
-from django.contrib import messages
 from django.contrib.auth.models import User
 from datetime import datetime
 from warehouses.forms import AddWareHouseConcept

@@ -45,7 +45,7 @@ def editCategories(request, categories_id):
             return HttpResponseRedirect('/addcategories/')
         
         except ValueError:
-            messages.success(request,"Error al actualizar el campo ")
+            messages.error(request,"Error al actualizar el campo ")
             return HttpResponseRedirect('/addcategories/')
 @login_required
 
@@ -59,7 +59,7 @@ def deleteCategories(request, categories_id):
         return HttpResponseRedirect('/addcategories/')
         
     except ValueError:
-        messages.success(request,"Error al actualizar el campo ")
+        messages.error(request,"Error al actualizar el campo ")
         return HttpResponseRedirect('/addwerehouse/')
 @login_required
 
@@ -100,7 +100,7 @@ def editBrands(request, brands_id):
             return HttpResponseRedirect('/addbrands/')
         
         except ValueError:
-            messages.success(request,"Error al actualizar el campo ")
+            messages.error(request,"Error al actualizar el campo ")
             return HttpResponseRedirect('/addbrands/')
 @login_required
         
@@ -113,7 +113,7 @@ def deletebrands(request, brands_id):
         return HttpResponseRedirect('/addbrands/')
         
     except ValueError:
-        messages.success(request,"Error al actualizar el campo ")
+        messages.error(request,"Error al actualizar el campo ")
         return HttpResponseRedirect('/addbrands/')
 
 @login_required
@@ -148,7 +148,7 @@ def addProducts (request):
                 messages.error(request,"Error en el formulario / revise los datos de registro")
                 return HttpResponseRedirect('')
         except ValueError as e :
-            messages.success(request, e)
+            messages.error(request, e)
             return HttpResponseRedirect('')
 @login_required
 
@@ -190,7 +190,7 @@ def editproduct (request, products_id):
             return HttpResponseRedirect('/addproducts/')
         
         except ValueError:
-            messages.success(request,"Error al actualizar el campo ")
+            messages.error(request,"Error al actualizar el campo ")
             return HttpResponseRedirect('/addproducts/')
 @login_required
 
@@ -209,7 +209,7 @@ def deleteproduct(request, products_id):
         messages.success(request,"El producto tiene existencia en un almacén / No se puede eliminar ")
         return HttpResponseRedirect('/addproducts/')
     except ValueError:
-        messages.success(request,"Error al actualizar los campos")
+        messages.error(request,"Error al actualizar los campos")
         return HttpResponseRedirect('/addproducts/')
 @login_required
 
@@ -248,7 +248,7 @@ def addProductList(request):
                 return HttpResponseRedirect('')   
         
         except ValueError as e :
-            messages.success(request, e)
+            messages.error(request, e)
             return HttpResponseRedirect('') 
 
 @login_required
@@ -292,7 +292,7 @@ def editproductslist(request, productlist_id):
             return HttpResponseRedirect('/addproductslist/')
         
         except ValueError:
-            messages.success(request,"Error al actualizar el campo ")
+            messages.error(request,"Error al actualizar el campo ")
             return HttpResponseRedirect('/addproductslist/')
         
 
