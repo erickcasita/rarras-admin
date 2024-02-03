@@ -2,3 +2,4 @@
 env-rarras
 __pycache__
 .env
+.idea
