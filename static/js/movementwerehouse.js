@@ -1,4 +1,48 @@
-
+$("#formFilterMovementWarehouses").validate({
+    rules: {
+        dateInitFilter: {
+            required: true
+        },
+        dateFinishFilter: {
+            required: true
+        }
+    },
+    messages: {
+        dateInitFilter: {
+            required: "Por favor, Seleccione la fecha inicial para filtrar"
+        },
+        dateFinishFilter: {
+            required: "Por favor, Seleccione la fecha final para filtrar"
+        }
+    },
+    submitHandler: function (form) {
+        let now = new Date();
+        let today = new Date(`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`);
+        let dateinitform = new Date($('#dateInitFilter').val());
+        let datefinishform = new Date($('#dateFinishFilter').val());
+        if (today < dateinitform || today < datefinishform) {
+            Swal.fire({
+                title: 'Fecha no validas',
+                text: 'Alguna fecha proporcionada es posterior al dia actual',
+                icon: 'error',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#0d6efd'
+            });
+        } else {
+            if (dateinitform > datefinishform) {
+                Swal.fire({
+                    title: 'Fecha inicial no valida',
+                    text: 'La fecha inicial del reporte es posterior a la fecha final',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#0d6efd'
+                });
+            } else {
+                form.submit();
+            }
+        }
+    }
+});
 
 $("#formWarehouseMovement").validate({
     rules: {
