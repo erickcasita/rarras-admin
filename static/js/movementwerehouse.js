@@ -1,4 +1,18 @@
-
+$("#formFilterMovementWarehouses").validate({
+    rules: {
+        dateFilter: {
+            required: true
+        }
+    },
+    messages: {
+        dateFilter: {
+            required: "Por favor, Seleccione una fecha"
+        }
+    },
+    submitHandler: function (form) {
+        form.submit();
+    }
+});
 
 $("#formWarehouseMovement").validate({
     rules: {

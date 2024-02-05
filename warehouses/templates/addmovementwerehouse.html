@@ -85,7 +85,32 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Registro de Almacenes</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="card-title">Registro de Almacenes</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Custom Styled Validation -->
+                            <form class="row m-2" id="formFilterMovementWarehouses" method="POST">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="form-label">Fecha</label>
+                                        <input class="form-control" type="date" name="dateFilter" id="dateFilter">
+                                    </div>
+                                     <div class="col-md-5">
+                                         <label class="form-label">Movimiento</label>
+                                         <select class="form-select" id="typeMovementFilter" name="typeMovementFilter">
+                                             <option selected disabled value="">Seleccionar ...</option>
+                                         </select>
+                                    </div>
+                                    <div class="col-md-2 mt-auto">
+                                        <button class="btn btn-primary" type="submit">Filtrar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
                     <!-- Table with hoverable rows -->
                     <table class="table table-hover text-center">
