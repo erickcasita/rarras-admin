@@ -142,21 +142,21 @@
           </a>
           <ul
             id="components-nav"
-            class="nav-content collapse  {% if request.path == '/addwerehouse/' or  request.path == '/addtypemovement/' or request.path == '/addwerehouseconcept/' or request.path == '/addmovementwerehouse/'  or request.path == '/addwerehousepurchasing/' or request.path == '/addtransferwerehouse/' %} show {% endif %}"
+            class="nav-content collapse  {% if request.path == '/addwerehouse/' or  request.path == '/addtypemovement/' or request.path == '/addwerehouseconcept/' or request.path == '/addmovementwerehouse/'  or request.path == '/addwerehousepurchasing/' or request.path == '/addtransferwerehouse/'  or request.resolver_match.view_name == 'editwerehouse'  or request.resolver_match.view_name == 'edittypemovement' or request.resolver_match.view_name == 'editwerehouseconcept' %} show {% endif %}"
             data-bs-parent="#sidebar-nav"
           >
             <li>
-              <a href="{% url 'addwerehouse' %}" {% if request.path == '/addwerehouse/' %}class="active"{% endif %}>
+              <a href="{% url 'addwerehouse' %}" {% if request.path == '/addwerehouse/' or request.resolver_match.view_name == 'editwerehouse' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Almacenes</span>
               </a>
             </li>
             <li>
-              <a href="{% url 'addtypemovement' %}" {% if request.path == '/addtypemovement/' %}class="active"{% endif %}>
+              <a href="{% url 'addtypemovement' %}" {% if request.path == '/addtypemovement/' or request.resolver_match.view_name == 'edittypemovement' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Tipo de Movimiento</span>
               </a>
             </li>
             <li>
-              <a href="{% url 'addwerehouseconcept' %}" {% if request.path == '/addwerehouseconcept/' %}class="active"{% endif %}>
+              <a href="{% url 'addwerehouseconcept' %}" {% if request.path == '/addwerehouseconcept/' or request.resolver_match.view_name == 'editwerehouseconcept' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Conceptos de Almacén</span>
               </a>
             </li>
@@ -191,26 +191,26 @@
           </a>
           <ul
             id="products-nav"
-            class="nav-content collapse {% if request.path == '/addcategories/' or  request.path == '/addbrands/' or request.path == '/addproducts/' or request.path == '/addproductslist/' %} show {% endif %}"
+            class="nav-content collapse {% if request.path == '/addcategories/' or  request.path == '/addbrands/' or request.path == '/addproducts/' or request.path == '/addproductslist/' or request.resolver_match.view_name == 'editcategories' or request.resolver_match.view_name == 'editbrands' or request.resolver_match.view_name == 'editproduct' or request.resolver_match.view_name == 'editproductslist' %} show {% endif %}"
             data-bs-parent="#sidebar-nav"
           >
             <li>
-              <a href="{% url 'addcategories' %}" {% if request.path == '/addcategories/' %}class="active"{% endif %}>
+              <a href="{% url 'addcategories' %}" {% if request.path == '/addcategories/' or request.resolver_match.view_name == 'editcategories' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Categorias</span>
               </a>
             </li>
             <li>
-              <a href="{% url 'addbrands' %}" {% if request.path == '/addbrands/' %}class="active"{% endif %}>
+              <a href="{% url 'addbrands' %}" {% if request.path == '/addbrands/' or request.resolver_match.view_name == 'editbrands' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Marcas</span>
               </a>
             </li>
             <li>
-              <a href="{% url 'addproducts' %}" {% if request.path == '/addproducts/' %}class="active"{% endif %}>
+              <a href="{% url 'addproducts' %}" {% if request.path == '/addproducts/' or request.resolver_match.view_name == 'editproduct' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Productos</span>
               </a>
             </li>
             <li>
-              <a href="{% url 'addproductlist' %}"  {% if request.path == '/addproductslist/' %}class="active"{% endif %}>
+              <a href="{% url 'addproductlist' %}"  {% if request.path == '/addproductslist/' or request.resolver_match.view_name == 'editproductslist' %}class="active"{% endif %}>
                 <i class="bi bi-circle"></i><span>Lista de precios</span>
               </a>
             </li>
