@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from .models import WareHouses, TypeMovement, WareHouseConcept,WereHouseStock,WereHouseMovement,WereHouseMovementDetails,WereHousePurchasing,WereHousePurchasingDetails
 from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from products.models import ProductList
 from helpers.helpers import stockproduct
 from datetime import datetime
@@ -205,12 +205,29 @@ def deletewerehouseconcept(request, werehouseconcept_id):
 def addmovementwerehouse(request):
     if request.method ==  'GET':
         productswarehouse = WereHouseStock.objects.filter(werehouse_id = request.user.profileuser.warehouse_id)
+        typemovements = TypeMovement.objects.filter(visible=True)
         movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id, created__date=datetime.now())
+        try:
+            initdate = request.GET.get('dateInitFilter') 
+            finaldate = request.GET.get('dateFinishFilter')
+            typemovements_id = request.GET.get('typeMovementFilter')
+            initdate = datetime.strptime(initdate,"%Y-%m-%d") 
+            finaldate = datetime.strptime(finaldate,"%Y-%m-%d") 
+            finaldate = finaldate.replace(minute=59, hour=23, second=59)
+        except:
+            initdate = None
+            finaldate = None
+            typemovements_id = None
+        if(initdate and finaldate and typemovements_id):
+            movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id, created__range = (initdate, finaldate), typemovement_id = typemovements_id)
+        if (initdate and finaldate and typemovements_id is None):
+            movements = WereHouseMovement.objects.filter(werehouse_id = request.user.profileuser.warehouse.id, created__range = (initdate, finaldate))
         return render(request, 'addmovementwerehouse.html', {
             
             'formtypemovement': AddWareHouseConcept,
             'products': productswarehouse,
-            'movements': movements
+            'movements': movements,
+            'typemovements': typemovements
          })
     else:
         try:

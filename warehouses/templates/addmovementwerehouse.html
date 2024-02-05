@@ -87,12 +87,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <h5 class="card-title">Registro de Almacenes</h5>
+                            <h5 class="card-title">Listado de Movimientos</h5>
                         </div>
                         <div class="col-md-8">
                             <!-- Custom Styled Validation -->
-                            <form class="row m-2" id="formFilterMovementWarehouses" method="POST">
-                                {% csrf_token %}
+                            <form class="row m-2" id="formFilterMovementWarehouses" method="GET">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="form-label">Fecha Inicial</label>
@@ -106,6 +105,9 @@
                                          <label class="form-label">Movimiento</label>
                                          <select class="form-select" id="typeMovementFilter" name="typeMovementFilter">
                                              <option selected disabled value="">Seleccionar ...</option>
+                                             {% for type in typemovements %}
+                                                <option value="{{type.pk}}">{{type.name}}</option>
+                                             {% endfor %}
                                          </select>
                                     </div>
                                     <div class="col-md-2 mt-auto">
