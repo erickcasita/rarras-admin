@@ -297,7 +297,6 @@ def addwerehousepurchasing(request):
        
         listprice =  ProductList.objects.all()
         products = WereHouseStock.objects.filter(werehouse_id  = request.user.profileuser.warehouse.id)
-        typemovements = TypeMovement.objects.filter(visible=True)
         purchasing = WereHousePurchasing.objects.all().filter(created__date=datetime.now())
         try:
             initdate = request.GET.get('dateInitFilter') 
@@ -314,8 +313,7 @@ def addwerehousepurchasing(request):
             
             'listprice': listprice,
             'products' : products,
-            'purchasing': purchasing,
-            'typemovements': typemovements
+            'purchasing': purchasing
          })
     else:
         try:
