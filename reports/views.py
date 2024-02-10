@@ -35,7 +35,7 @@ def reportstock (request):
         werehouse = WareHouses.objects.get(visible=True, pk = idwerehouse)
         category = Categories.objects.get(visible = True , pk = idcategory)
         totales = WereHouseStock.objects.filter(werehouse_id = idwerehouse, product__categories_id = idcategory).aggregate(Sum('stock'))
-        context = {'user': user ,'stock' : stock, 'werehouse':werehouse, 'category': category,
+        context = {'user': user.upper() ,'stock' : stock, 'werehouse':werehouse, 'category': category,
                    'totales':totales, 'datenow': datenow}
     
         # Create a Django response object, and specify content_type as pdf
@@ -98,7 +98,7 @@ def reportmovement (request):
                                                                  werehousemovement__werehouseconcept_id = concepid,
                                                                  werehousemovement__typemovement_id = typemovement,werehousemovement__werehouse_id = idwerehouse).aggregate(Sum('canmov'))
         context = {'movement': movement, 'detailsmovements': detailsmovements,'initdate': initdate, 
-                   'finaldate': finaldate, 'user': user, 'datenow': datenow,'totalxmovement': totalxmovement, 'grantotal': grantotal}
+                   'finaldate': finaldate, 'user': user.upper(), 'datenow': datenow,'totalxmovement': totalxmovement, 'grantotal': grantotal}
     
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
