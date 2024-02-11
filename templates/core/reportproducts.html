@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Existencias </title>
+</head>
+
+<body style="font-family: Arial, Helvetica, sans-serif;">
+  <table style="border-bottom: 1px solid; border-bottom-color: black;">
+    <tbody>
+      <tr>
+        <td>
+          <img src="static/img/logorarras.png" alt="logo" width="150px">
+        </td>
+
+        <td style="width: 450px; text-align: center;">
+          <table>
+            <tbody>
+              <tr>
+                <td style="text-align: center; font-size: 20px;font-weight: bold; padding-bottom: 70px;">
+                  SUPER TIENDAS RARRAS S.A DE C.V</td>
+              </tr>
+              <tr style="text-align: left;font-size: 14px;font-weight: bold; padding-top:15px">
+                <td style="text-align: center; font-size: 14px;font-weight: bold;">REPORTE DE PRODUCTOS</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+
+        <td>
+          <table >
+            <tbody>
+              <tr>
+                <td colspan="2" style="text-align: center;font-size: 10px;font-weight: bold;">
+                  SUPER TIENDAS RARRAS <br><br></td>
+              </tr>
+
+              <tr style="text-align: left;font-size: 10px;font-weight: bold; border-top: 1px solid  #000;">
+                <td style= "padding-top:5px;" >FECHA:</td>
+                <td style= "padding-top:5px;">{{datenow | date:"d/m/Y"}}</td>
+              </tr>
+              <tr style="text-align: left;font-size: 10px;font-weight: bold;">
+                <td>HORA:</td>
+                <td>{{datenow | time:"H:i:s A"}}</td>
+              </tr>
+              <tr style="text-align: left;font-size: 10px;font-weight: bold;">
+                <td>USUARIO:</td>
+                <td>{{user}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table style="border-spacing: 20px 0px;">
+    <thead>
+      <tr style="font-weight: bold; font-size: 12px; padding-top:5px">
+        <td>ID</td>
+        <td>SKU</td>
+        <td style="text-align: center;">DESCRIPCION</td>
+        <td style="text-align: center;">MARCA</td>
+        <td style="text-align: center;">CATEGORIA</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+            <tr style="font-size: 10PX; padding-top: 5px">
+                <td>{{product.id}}</td>
+                <td>{{product.cvesap}}</td>
+                <td style="text-align: center;">{{product.name}}</td>
+                <td style="text-align: center;">{{product.brands.name}}</td>
+                <td style="text-align: center;">{{product.categories.name}}</td>
+            </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+
+</html>

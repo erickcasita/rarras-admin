@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from products.models import Categories
+from products.models import Products,ProductListDetails
 from warehouses.models import WareHouses,WereHouseStock, WereHouseMovementDetails, WareHouseConcept,TypeMovement,WereHouseMovement
 from products.models import Categories
 from django.db.models import Sum
@@ -110,6 +110,59 @@ def reportmovement (request):
         # create a pdf
         pisa_status = pisa.CreatePDF(
         html, dest=response)
+        # if error then show some funny view
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+
+
+@login_required
+def reportproducts(request):
+    if request.method == 'GET':
+
+        user = request.user.username
+        datenow = datetime.now()
+
+        products = Products.objects.all()
+
+        context = {'products': products, 'user': user, 'datenow': datenow}
+
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="report_products.pdf"'
+        # find the template and render it.
+        template = get_template('core/reportproducts.html')
+        html = template.render(context)
+
+        # create a pdf
+        pisa_status = pisa.CreatePDF(
+            html, dest=response)
+        # if error then show some funny view
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+
+@login_required
+def reportpricelist(request):
+    if request.method == 'GET':
+
+        user = request.user.username
+        datenow = datetime.now()
+
+        productdetails = ProductListDetails.objects.all().order_by('-productlist_id')
+
+        context = {'productdetails': productdetails, 'user': user, 'datenow': datenow, 'lastpricelist': 0}
+
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="report_products.pdf"'
+        # find the template and render it.
+        template = get_template('core/reportpricelist.html')
+        html = template.render(context)
+
+        # create a pdf
+        pisa_status = pisa.CreatePDF(
+            html, dest=response)
         # if error then show some funny view
         if pisa_status.err:
             return HttpResponse('We had some errors <pre>' + html + '</pre>')
