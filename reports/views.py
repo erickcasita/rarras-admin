@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from products.models import Products,ProductListDetails
+from products.models import Products,ProductListDetails, ProductList
 from warehouses.models import WareHouses,WereHouseStock, WereHouseMovementDetails, WareHouseConcept,TypeMovement,WereHouseMovement
 from products.models import Categories
 from django.db.models import Sum
@@ -149,9 +149,10 @@ def reportpricelist(request):
         user = request.user.username
         datenow = datetime.now()
 
+        productlists = ProductList.objects.all()
         productdetails = ProductListDetails.objects.all().order_by('-productlist_id')
 
-        context = {'productdetails': productdetails, 'user': user, 'datenow': datenow, 'lastpricelist': 0}
+        context = {'productlists': productlists,'productdetails': productdetails, 'user': user, 'datenow': datenow}
 
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')

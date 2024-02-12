@@ -55,9 +55,9 @@
       </tr>
     </tbody>
   </table>
-  <table style="border-spacing: 20px 0px;">
+  <table style="border-spacing: 10px 0px;">
     <thead>
-      <tr style="font-weight: bold; font-size: 12px; padding-top:5px">
+      <tr style="font-weight: bold; font-size: 12px; padding-top:10px;">
         <td>ID</td>
         <td>SKU</td>
         <td style="text-align: center;">DESCRIPCION</td>
@@ -65,25 +65,26 @@
       </tr>
     </thead>
     <tbody>
-      {% for productdetail in productdetails %}
-            {% if lastpricelist !=  productdetail.productlist.id %}
-                      {% set lastpricelist = productdetail.productlist.id %}
-                <tr>
-                    <td colspan="5" style="border-bottom: 1px solid; border-bottom-color: black;"></td>
-                  </tr>
-                  <tr>
-                    <td colspan="5" style="font-weight: bold; font-size: 16px;">{{productdetail.productlist.name}}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="5" style="border-bottom: 1px solid; border-bottom-color: black;"></td>
-                  </tr>
-            {% endif %}
+      {% for productlist in productlists %}
+        <tr>
+          <td colspan="5" style="border-bottom: 1px solid; border-bottom-color: black;"></td>
+        </tr>
+        <tr>
+          <td colspan="5" style="font-weight: bold; font-size: 16px;padding-top:10px;">{{productlist.name}}</td>
+        </tr>
+        <tr>
+          <td colspan="5" style="border-bottom: 1px solid; border-bottom-color: black;"></td>
+        </tr>
+        {% for productdetail in productdetails %}
+          {% if productlist.id == productdetail.productlist.id %}
             <tr style="font-size: 10PX; padding-top: 5px">
-                <td>{{productdetail.product.id}}</td>
-                <td>{{productdetail.product.cvesap}}</td>
-                <td style="text-align: center;">{{productdetail.product.name}}</td>
-                <td style="text-align: center;">{{productdetail.predlp}}</td>
+              <td>{{productdetail.product.id}}</td>
+              <td>{{productdetail.product.cvesap}}</td>
+              <td style="text-align: center;">{{productdetail.product.name}}</td>
+              <td style="text-align: center;">{{productdetail.predlp}}</td>
             </tr>
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     </tbody>
   </table>
