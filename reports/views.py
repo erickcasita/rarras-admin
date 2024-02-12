@@ -125,7 +125,7 @@ def reportproducts(request):
 
         products = Products.objects.all()
 
-        context = {'products': products, 'user': user, 'datenow': datenow}
+        context = {'products': products, 'user': user.upper(), 'datenow': datenow}
 
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
@@ -152,7 +152,7 @@ def reportpricelist(request):
         productlists = ProductList.objects.all()
         productdetails = ProductListDetails.objects.all().order_by('-productlist_id')
 
-        context = {'productlists': productlists,'productdetails': productdetails, 'user': user, 'datenow': datenow}
+        context = {'productlists': productlists,'productdetails': productdetails, 'user': user.upper(), 'datenow': datenow}
 
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')

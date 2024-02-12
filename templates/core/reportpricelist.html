@@ -8,7 +8,7 @@
 </head>
 
 <body style="font-family: Arial, Helvetica, sans-serif;">
-  <table style="border-bottom: 1px solid; border-bottom-color: black;">
+  <table>
     <tbody>
       <tr>
         <td>
@@ -55,25 +55,23 @@
       </tr>
     </tbody>
   </table>
-  <table style="border-spacing: 10px 0px;">
-    <thead>
-      <tr style="font-weight: bold; font-size: 12px; padding-top:10px;">
-        <td>ID</td>
-        <td>SKU</td>
-        <td style="text-align: center;">DESCRIPCION</td>
-        <td style="text-align: center;">PRECIO</td>
-      </tr>
-    </thead>
+  <table>
     <tbody>
       {% for productlist in productlists %}
         <tr>
           <td colspan="5" style="border-bottom: 1px solid; border-bottom-color: black;"></td>
         </tr>
         <tr>
-          <td colspan="5" style="font-weight: bold; font-size: 16px;padding-top:10px;">{{productlist.name}}</td>
+          <td colspan="5" style="font-weight: bold; font-size: 12px;padding-top:10px;">{{productlist.name}}</td>
         </tr>
         <tr>
           <td colspan="5" style="border-bottom: 1px solid; border-bottom-color: black;"></td>
+        </tr>
+        <tr style="font-weight: bold; font-size: 12px; padding-top:10px;">
+          <td>ID</td>
+          <td>SKU</td>
+          <td style="text-align: center;">DESCRIPCION</td>
+          <td style="text-align: center;">PRECIO</td>
         </tr>
         {% for productdetail in productdetails %}
           {% if productlist.id == productdetail.productlist.id %}
